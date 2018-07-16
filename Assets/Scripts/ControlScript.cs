@@ -111,6 +111,8 @@ public class ControlScript : MonoBehaviour
     private TouchEvents g_EventsScript;
     public Camera mainCamera;
 
+    private Texture2D primaryPlaybackTexture;
+
     public bool Hololens = true;
 
     public ControlScript()
@@ -243,7 +245,7 @@ public class ControlScript : MonoBehaviour
             Plugin.CreateRemoteMediaPlayback();
             IntPtr nativeTex = IntPtr.Zero;
             Plugin.GetRemotePrimaryTexture(RemoteTextureWidth, RemoteTextureHeight, out nativeTex);
-            var primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
+            primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
             RemoteVideoImage.texture = primaryPlaybackTexture;
             if (Hololens == true)
             {
@@ -500,12 +502,17 @@ public class ControlScript : MonoBehaviour
                     VTex.LoadRawTextureData(vPlane);
                     VTex.Apply();
 
-                /*           byte[] image = YTex.EncodeToJPG();
-               #if !UNITY_EDITOR
-                           StorageFolder g_RootFolder = ApplicationData.Current.LocalFolder;
-                           StorageFile sampleFile = await g_RootFolder.CreateFileAsync("testVideo.png", CreationCollisionOption.ReplaceExisting);
-                           await FileIO.WriteBytesAsync(sampleFile, image);
-               #endif*/
+                    /*byte[] bytes = Stabilization.Instance.MainTex.EncodeToPNG();
+
+#if !UNITY_EDITOR
+                    if (bytes != null)
+                    {
+                        StorageFolder rootFolder = ApplicationData.Current.LocalFolder;
+                        StorageFile sampleFile = await rootFolder.CreateFileAsync("testVideo"+counter.ToString()+".png", CreationCollisionOption.ReplaceExisting);
+                        File.WriteAllBytes(sampleFile.Path, bytes);
+                        counter++;
+                    }*
+#endif*/
                 }, false);
                 //GetComponent<Renderer>().material.mainTexture = tex;
                 //Debug.Log(posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW);
@@ -514,7 +521,6 @@ public class ControlScript : MonoBehaviour
                 //var primaryPlaybackTexture2 = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
                 //Stabilization.Instance.SetTexture(primaryPlaybackTexture2);
                 //byte[] imagebytes = RemoteVideoImage.texture.GetRawTextureData();
-
             }
         }
     }

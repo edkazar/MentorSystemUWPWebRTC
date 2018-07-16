@@ -38,85 +38,115 @@ public class ButtonClicking : MonoBehaviour
 
     public void onClickInstrumentsPanelButton()
     {
-        g_ToolsPanel.gameObject.SetActive(true);
-        g_HandsPanel.gameObject.SetActive(false);
-        g_TextsPanel.gameObject.SetActive(false);
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_ToolsPanel.gameObject.SetActive(true);
+            g_HandsPanel.gameObject.SetActive(false);
+            g_TextsPanel.gameObject.SetActive(false);
+        }
     }
 
     public void onClickHandsPanelButton()
     {
-        g_ToolsPanel.gameObject.SetActive(false);
-        g_HandsPanel.gameObject.SetActive(true);
-        g_TextsPanel.gameObject.SetActive(false);
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_ToolsPanel.gameObject.SetActive(false);
+            g_HandsPanel.gameObject.SetActive(true);
+            g_TextsPanel.gameObject.SetActive(false);
+        }
     }
 
     public void onClickTextsPanelButton()
     {
-        g_ToolsPanel.gameObject.SetActive(false);
-        g_HandsPanel.gameObject.SetActive(false);
-        g_TextsPanel.gameObject.SetActive(true);
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_ToolsPanel.gameObject.SetActive(false);
+            g_HandsPanel.gameObject.SetActive(false);
+            g_TextsPanel.gameObject.SetActive(true);
+        }
     }
 
     public void onClickTrackHandsButton()
     {
-        g_TrackHandsButtonClicked = !g_TrackHandsButtonClicked;
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_TrackHandsButtonClicked = !g_TrackHandsButtonClicked;
 
-        changeButtonColor(g_TrackHandsButtonClicked, EventSystem.current.currentSelectedGameObject, false);
+            changeButtonColor(g_TrackHandsButtonClicked, EventSystem.current.currentSelectedGameObject, false);
+        }
     }
 
     public void onClickLinesButton()
     {
-        g_LineButtonClicked = !g_LineButtonClicked;
-        changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
-
-        if (g_PointsButtonClicked)
+        if (g_EventManager.g_UserInterface.activeSelf)
         {
-            g_PointsButtonClicked = !g_PointsButtonClicked;
-            changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
+            g_LineButtonClicked = !g_LineButtonClicked;
+            changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
+
+            if (g_PointsButtonClicked)
+            {
+                g_PointsButtonClicked = !g_PointsButtonClicked;
+                changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
+            }
         }
     }
 
     public void onClickPointsButton()
     {
-        g_PointsButtonClicked = !g_PointsButtonClicked;
-        changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
-
-        if (g_LineButtonClicked)
+        if (g_EventManager.g_UserInterface.activeSelf)
         {
-            g_LineButtonClicked = !g_LineButtonClicked;
-            changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
+            g_PointsButtonClicked = !g_PointsButtonClicked;
+            changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
+
+            if (g_LineButtonClicked)
+            {
+                g_LineButtonClicked = !g_LineButtonClicked;
+                changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
+            }
         }
     }
 
     public void onClickEraseButton()
     {
-        g_EventManager.EraseSelected();
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_EventManager.EraseSelected();
+        }
     }
 
     public void onClickEraseAllButton()
     {
-        g_EventManager.EraseAll();
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_EventManager.EraseAll();
+        }
     }
 
     public void onClickExitButton()
     {
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
 #if ENABLE_WINMD_SUPPORT
         Windows.ApplicationModel.Core.CoreApplication.Exit();
         //deleteTempFiles();
 #else
-        Application.Quit();
+            Application.Quit();
 #endif
+        }
     }
 
     public void onClickPanelOptionsButton()
     {
-        if(g_PanelButtonClicked)
+        if (g_EventManager.g_UserInterface.activeSelf)
         {
-            changeButtonColor(false, g_TempPressedObject, true);
+            if (g_PanelButtonClicked)
+            {
+                changeButtonColor(false, g_TempPressedObject, true);
+            }
+            g_PanelButtonClicked = true;
+            g_TempPressedObject = EventSystem.current.currentSelectedGameObject;
+            changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
         }
-        g_PanelButtonClicked = true;
-        g_TempPressedObject= EventSystem.current.currentSelectedGameObject;       
-        changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
     }
 
     public string UnselectPanelButton()
@@ -124,6 +154,7 @@ public class ButtonClicking : MonoBehaviour
         g_PanelButtonClicked = false;
         changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
         return g_TempPressedObject.GetComponent<Image>().sprite.name;
+
     }
 
     public void SetObjectForColorChange(bool p_flag, Transform p_selectedObject)
