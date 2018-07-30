@@ -21,280 +21,415 @@ public class TouchEvents : MonoBehaviour
     private List<Vector3> g_CurrentLine;
 
     private int g_AnnotationCounter;
-    public int g_UICounter { get; set; }
 
     public Transform g_SelectedElementTransform { get; set; }
-    public bool isUserAnnotating { get; set; }
+    public bool isUserIconAnnotating { get; set; }
+    public bool isUserLineAnnotating { get; set; }
+
+    private List<float> g_PoseParameters;
 
     // Use this for initialization
     void Start ()
     {
         assetLoading();
-        assetInitialization();
+        assetInitialization(); 
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (g_UICounter < 10)
-        {
-            g_UserInterface.SetActive(true);
-            //g_UserInterface.GetComponent<CanvasGroup>().alpha = 1.0f;
-        }
-        
-        else if(g_UICounter >= 300)
-        {
-            g_UserInterface.SetActive(false);
-            //g_UserInterface.GetComponent<CanvasGroup>().alpha = 0.0f;
-        }
-
-        g_UICounter++;
         // Verify that there was a touch event
         if (EventSystem.current != null && Input.touchCount > 0)
         {
-            if (g_UserInterface.activeSelf)
-            //if (g_UserInterface.GetComponent<CanvasGroup>().alpha == 1.0f )
+            Touch[] myTouches = Input.touches;
+
+            Vector3 touchedPoint3D = new Vector3(myTouches[0].position.x, myTouches[0].position.y, 0.0f);
+
+            //Raycasting to see if the UI was hit from the camera perspective
+            PointerEventData pointer = new PointerEventData(EventSystem.current);
+            pointer.position = new Vector2(touchedPoint3D[0], touchedPoint3D[1]);
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointer, raycastResults);
+
+            // The touch was performed on an element that was part of the UI (and if pixel is not transparent)
+            if (raycastResults.Count > 0)
             {
-                if (g_UICounter >= 30)
+                // The touch was performed in one of the Icon annotations
+                if (raycastResults[0].gameObject.transform.parent.gameObject.name == "IconAnnotationsContainer")
                 {
-                    Touch[] myTouches = Input.touches;
-
-                    Vector3 touchedPoint3D = new Vector3(myTouches[0].position.x, myTouches[0].position.y, 0.0f);
-
-                    //Raycasting to see if the UI was hit from the camera perspective
-                    PointerEventData pointer = new PointerEventData(EventSystem.current);
-                    pointer.position = new Vector2(touchedPoint3D[0], touchedPoint3D[1]);
-                    List<RaycastResult> raycastResults = new List<RaycastResult>();
-                    EventSystem.current.RaycastAll(pointer, raycastResults);
-
-                    // The touch was performed on an element that was part of the UI
-                    if (raycastResults.Count > 0)
+                    // Single touch interactions
+                    if (Input.touchCount == 1)
                     {
-                        // The touch was performed in one of the Icon annotations
-                        if (raycastResults[0].gameObject.transform.parent.gameObject.name == "IconAnnotationsContainer")
+                        if (!isPixelTransparent(raycastResults))
                         {
-                            // Single touch interactions
-                            if (Input.touchCount == 1)
-                            {
-                                // As soon as the touch initiates
-                                if (myTouches[0].phase == TouchPhase.Began)
-                                {
-                                    // Deselect all the icon annotations
-                                    deselectIconAnnotations();
-
-                                    // make the currently touch annotation the selected one, and change its color
-                                    g_SelectedElementTransform = raycastResults[0].gameObject.transform;
-                                    g_ButtonManager.SetObjectForColorChange(true, g_SelectedElementTransform);
-
-                                    isUserAnnotating = true;
-                                }
-
-                                // The finger is moving through the screen
-                                else if (myTouches[0].phase == TouchPhase.Moved)
-                                {
-                                    // Update the position of the annotation that is being dragged
-                                    if (g_SelectedElementTransform != null)
-                                    {
-                                        double distance = Mathf.Sqrt(Mathf.Pow((myTouches[0].deltaPosition.x - g_SelectedElementTransform.position.x), 2) +
-                                        Mathf.Pow((myTouches[0].deltaPosition.y - g_SelectedElementTransform.position.y), 2));
-                                        if (distance > 25)
-                                        {
-                                            g_SelectedElementTransform.position = g_SelectedElementTransform.position + new Vector3(myTouches[0].deltaPosition.x, myTouches[0].deltaPosition.y, 0.0f);
-
-                                            // Stores the important info of the annotation for the JSON
-                                            List<float> annotation_information = new List<float>();
-                                            annotation_information.Add(g_SelectedElementTransform.position.x);
-                                            annotation_information.Add(g_SelectedElementTransform.position.y);
-                                            annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
-                                            annotation_information.Add(g_SelectedElementTransform.localScale.x);
-
-                                            g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information);
-                                        }
-                                    }
-                                }
-                                // As soon as the touch initiates
-                                if (myTouches[0].phase == TouchPhase.Ended)
-                                {
-                                    g_UICounter = 0;
-                                    isUserAnnotating = false;
-                                }
-                            }
-                            // Multi finger touch performed over an icon annotation
-                            // This could just be an else, but we are leaving it open in case of "more-than-two-touch-points" interactions
-                            else if (Input.touchCount == 2)
-                            {
-                                // Find the position in the previous frame of each touch.
-                                Vector2 touchZeroPrevPos = myTouches[0].position - myTouches[0].deltaPosition;
-                                Vector2 touchOnePrevPos = myTouches[1].position - myTouches[1].deltaPosition;
-
-                                // As soon as the touch initiates
-                                if (myTouches[0].phase == TouchPhase.Began)
-                                {
-                                    // Deselect all the icon annotations
-                                    deselectIconAnnotations();
-
-                                    // make the currently touch annotation the selected one, and change its color
-                                    g_SelectedElementTransform = raycastResults[0].gameObject.transform;
-                                    g_ButtonManager.SetObjectForColorChange(true, g_SelectedElementTransform);
-
-                                    isUserAnnotating = true;
-                                }
-
-                                // Zoom interaction
-                                else if (myTouches[0].phase == TouchPhase.Moved && myTouches[1].phase == TouchPhase.Moved)
-                                {
-                                    Vector2 prevTouchDelta = touchZeroPrevPos - touchOnePrevPos;
-                                    Vector2 touchDelta = myTouches[0].position - myTouches[1].position;
-
-                                    float angle = Vector2.Angle(prevTouchDelta, touchDelta);
-
-                                    // The angle between the vector is higher that the rotation threshold. The event is a rotation
-                                    if (angle > 0.1)
-                                    {
-                                        var LR = Vector3.Cross(prevTouchDelta, touchDelta);
-                                        if (LR.z > 0)
-                                            g_SelectedElementTransform.Rotate(0.0f, 0.0f, angle);
-                                        else
-                                            g_SelectedElementTransform.Rotate(0.0f, 0.0f, -1.0f * angle);
-                                    }
-
-                                    // The event is a pinch. Perform zoom.
-                                    else
-                                    {
-                                        // Find the magnitude of the vector (the distance) between the touches in each frame.
-                                        float prevTouchDeltaMag = prevTouchDelta.magnitude;
-                                        float touchDeltaMag = touchDelta.magnitude;
-
-                                        // Find the difference in the distances between each frame. The -10 is for scaling purposes
-                                        float deltaMagnitudeDiff = (prevTouchDeltaMag - touchDeltaMag) / -10.0f;
-
-                                        g_SelectedElementTransform.localScale = new Vector3(g_SelectedElementTransform.localScale.x + deltaMagnitudeDiff,
-                                            g_SelectedElementTransform.localScale.y + deltaMagnitudeDiff, g_SelectedElementTransform.localScale.z);
-                                    }
-                                }
-                                else if (myTouches[0].phase == TouchPhase.Ended && myTouches[1].phase == TouchPhase.Ended)
-                                {
-                                    // Stores the important info of the annotation for the JSON
-                                    List<float> annotation_information = new List<float>();
-                                    annotation_information.Add(g_SelectedElementTransform.position.x);
-                                    annotation_information.Add(g_SelectedElementTransform.position.y);
-                                    annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
-                                    annotation_information.Add(g_SelectedElementTransform.localScale.x);
-
-                                    g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information);
-
-                                    g_UICounter = 0;
-                                    isUserAnnotating = false;
-                                }
-                            }
+                            performIconUniFingerInteraction(myTouches, raycastResults);
                         }
-                        // UI Interaction. The bulk of these functions is at the ButtonClicking module
                         else
                         {
-                            if (g_SelectedElementTransform != null)
-                            {
-                                // Deselect all the icon annotations
-                                deselectIconAnnotations();
-                                // Deselect other buttons in the panel that might have been pressed
-                                g_ButtonManager.SetObjectForColorChange(false, g_SelectedElementTransform);
-                            }
-
-                            g_UICounter = 0;
+                            performLineUniFingerInteraction(myTouches, touchedPoint3D);
                         }
                     }
-                    // Touch interaction on the background image
-                    else
+                    // Multi finger touch performed over an icon annotation
+                    // This could just be an else, but we are leaving it open in case of "more-than-two-touch-points" interactions
+                    else if (Input.touchCount == 2)
                     {
-                        // Single touch interaction. These are performed to create line annotations
-                        if (Input.touchCount == 1)
+                        if (!isPixelTransparent(raycastResults))
                         {
-                            // Deselect all the icon annotations
-                            deselectIconAnnotations();
-
-                            // Record initial touch position.
-                            if (myTouches[0].phase == TouchPhase.Began)
-                            {
-                                isUserAnnotating = true;
-
-                                // Initial point for a line annotation
-                                if (g_ButtonManager.g_LineButtonClicked)
-                                {
-                                    resetLineAnnotation();
-                                    g_CurrentLine.Add(touchedPoint3D);
-                                }
-                            }
-
-                            // Finger is moving through the screen as the line is being created
-                            else if (myTouches[0].phase == TouchPhase.Moved)
-                            {
-                                if (g_ButtonManager.g_LineButtonClicked)
-                                {
-                                    double distance = Mathf.Sqrt(Mathf.Pow((touchedPoint3D.x - g_CurrentLine[g_CurrentLine.Count - 1].x), 2) +
-                                        Mathf.Pow((touchedPoint3D.y - g_CurrentLine[g_CurrentLine.Count - 1].y), 2));
-                                    if (distance > 15)
-                                    {
-                                        Debug.Log("Drawing");
-                                        g_CurrentLine.Add(touchedPoint3D);
-                                        drawLine();
-                                    }
-                                }
-                            }
-
-                            // The touch event finished
-                            else if (myTouches[0].phase == TouchPhase.Ended)
-                            {
-                                // The touch was done to create an icon annotation. Create an icon annotation at the point of touch
-                                if (g_ButtonManager.g_PanelButtonClicked)
-                                {
-                                    string imageName = g_ButtonManager.UnselectPanelButton();
-                                    createIconAnnotation(touchedPoint3D, imageName);
-                                }
-                                // The touch has to do with line annotations
-                                else
-                                {
-                                    // The touch was the end of a line annotation. Create the line with the previously stores points
-                                    if (g_ButtonManager.g_LineButtonClicked)
-                                    {
-                                        g_CurrentLine.Add(touchedPoint3D);
-                                        drawLine();
-                                        g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null);
-                                        g_AnnotationCounter++;
-                                    }
-                                    // The touch was done to create a point annotation. Create the point and draw it
-                                    else if (g_ButtonManager.g_PointsButtonClicked)
-                                    {
-                                        resetLineAnnotation();
-                                        createPointAnnotation(touchedPoint3D);
-                                        drawLine();
-                                        g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null);
-                                        g_AnnotationCounter++;
-                                    }
-                                }
-                                g_UICounter = 0;
-                                isUserAnnotating = false;
-                            }  
+                            performIconMultiFingerInteraction(myTouches, raycastResults);
                         }
-                        // Multi touch interaction. These are performed to zoom the background image
-                        // This could just be an else, but we are leaving it open in case of "more-than-two-touch-points" interactions
-                        else if (Input.touchCount == 2)
+                        else
                         {
-
+                            performBackgroundMultiFingerInteraction(myTouches, touchedPoint3D);
                         }
                     }
                 }
+                // UI Interaction. The bulk of these functions is at the ButtonClicking module
+                else
+                {
+                    if (g_SelectedElementTransform != null)
+                    {
+                        // Deselect other buttons in the panel that might have been pressed
+                        g_ButtonManager.SetObjectForColorChange(false, g_SelectedElementTransform);
+                    }
+                }
+            }
+            // Touch interaction on the background image
+            else
+            {
+                // Single touch interaction. These are performed to create line annotations
+                if (Input.touchCount == 1)
+                {
+                    if (!isUserIconAnnotating)
+                        performLineUniFingerInteraction(myTouches, touchedPoint3D);
+                    else
+                        performIconUniFingerInteraction(myTouches, raycastResults);
+                }
+                // Multi touch interaction. These are performed to zoom the background image
+                // This could just be an else, but we are leaving it open in case of "more-than-two-touch-points" interactions
+                else if (Input.touchCount == 2)
+                {
+                    if (isUserIconAnnotating)
+                    {
+                        performIconMultiFingerInteraction(myTouches, raycastResults);
+                    }
+                    else
+                    {
+                        performBackgroundMultiFingerInteraction(myTouches, touchedPoint3D);
+                    }
+                }
+            }
+        }
+    }
+
+    //General encapsulation of touch events
+
+    private void performIconUniFingerInteraction(Touch[] myTouches, List<RaycastResult> raycastResults)
+    {
+        // As soon as the touch initiates
+        if (myTouches[0].phase == TouchPhase.Began)
+        {
+            IconFingerBegan(raycastResults);
+        }
+
+        // The finger is moving through the screen
+        else if (myTouches[0].phase == TouchPhase.Moved)
+        {
+            IconUniFingerMoved(myTouches);
+        }
+
+        // As soon as the touch ends
+        if (myTouches[0].phase == TouchPhase.Ended)
+        {
+            isUserIconAnnotating = false;
+        }
+    }
+
+    private void performIconMultiFingerInteraction(Touch[] myTouches, List<RaycastResult> raycastResults)
+    {
+        // Find the position in the previous frame of each touch.
+        Vector2 touchZeroPrevPos = myTouches[0].position - myTouches[0].deltaPosition;
+        Vector2 touchOnePrevPos = myTouches[1].position - myTouches[1].deltaPosition;
+
+        // As soon as the touch initiates
+        if (myTouches[0].phase == TouchPhase.Began)
+        {
+            IconFingerBegan(raycastResults);
+        }
+
+        // Zoom interaction
+        else if (myTouches[0].phase == TouchPhase.Moved && myTouches[1].phase == TouchPhase.Moved)
+        {
+            IconMultiFingerMoved(touchZeroPrevPos, touchOnePrevPos, myTouches);
+        }
+
+        else if (myTouches[0].phase == TouchPhase.Ended && myTouches[1].phase == TouchPhase.Ended)
+        {
+            IconMultiFingerEnded();
+        }
+    }
+
+    private void performLineUniFingerInteraction(Touch[] myTouches, Vector3 touchedPoint3D)
+    {
+        // Record initial touch position.
+        if (myTouches[0].phase == TouchPhase.Began)
+        {
+            // Deselect all the icon annotations
+            deselectIconAnnotations();
+            LineUniFingerBegan(touchedPoint3D);
+        }
+
+        // Finger is moving through the screen as the line is being created
+        else if (myTouches[0].phase == TouchPhase.Moved)
+        {
+            LineUniFingerMoved(touchedPoint3D);
+        }
+
+        // The touch event finished
+        else if (myTouches[0].phase == TouchPhase.Ended)
+        {
+            LineUniFingerEnded(touchedPoint3D);
+        }
+    }
+
+    private void performBackgroundMultiFingerInteraction(Touch[] myTouches, Vector3 touchedPoint3D)
+    {
+        // This would have routines for background image scaling. Not necessary currently.
+    }
+
+    //Icon shared Finger events
+
+    private void IconFingerBegan(List<RaycastResult> raycastResults)
+    {
+        // Deselect all the icon annotations
+        deselectIconAnnotations();
+
+        // make the currently touch annotation the selected one, and change its color
+        g_SelectedElementTransform = raycastResults[0].gameObject.transform;
+        g_ButtonManager.SetObjectForColorChange(true, g_SelectedElementTransform);
+
+        isUserIconAnnotating = true;
+    }
+
+   //Icon Uni Finger events
+
+    private void IconUniFingerMoved(Touch[] myTouches)
+    {
+        // Update the position of the annotation that is being dragged
+        if (g_SelectedElementTransform != null)
+        {
+            double distance = Mathf.Sqrt(Mathf.Pow((myTouches[0].deltaPosition.x - g_SelectedElementTransform.position.x), 2) +
+            Mathf.Pow((myTouches[0].deltaPosition.y - g_SelectedElementTransform.position.y), 2));
+            if (distance > 25)
+            {
+                g_SelectedElementTransform.position = g_SelectedElementTransform.position + new Vector3(myTouches[0].deltaPosition.x, myTouches[0].deltaPosition.y, 0.0f);
+
+                // Stores the important info of the annotation for the JSON
+                List<float> annotation_information = new List<float>();
+                annotation_information.Add(g_SelectedElementTransform.position.x);
+                annotation_information.Add(g_SelectedElementTransform.position.y);
+                annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
+                annotation_information.Add(g_SelectedElementTransform.localScale.x);
+
+                g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
+            }
+        }
+    }
+
+    //Icon Multi Finger events
+
+    private void IconMultiFingerMoved(Vector2 touchZeroPrevPos, Vector2 touchOnePrevPos, Touch[] myTouches)
+    {
+        Vector2 prevTouchDelta = touchZeroPrevPos - touchOnePrevPos;
+        Vector2 touchDelta = myTouches[0].position - myTouches[1].position;
+
+        float angle = Vector2.Angle(prevTouchDelta, touchDelta);
+
+        // The angle between the vector is higher that the rotation threshold. The event is a rotation
+        if (angle > 0.1)
+        {
+            var LR = Vector3.Cross(prevTouchDelta, touchDelta);
+            if (LR.z > 0)
+                g_SelectedElementTransform.Rotate(0.0f, 0.0f, angle);
+            else
+                g_SelectedElementTransform.Rotate(0.0f, 0.0f, -1.0f * angle);
+        }
+
+        // The event is a pinch. Perform zoom.
+        else
+        {
+            // Find the magnitude of the vector (the distance) between the touches in each frame.
+            float prevTouchDeltaMag = prevTouchDelta.magnitude;
+            float touchDeltaMag = touchDelta.magnitude;
+
+            // Find the difference in the distances between each frame. The -10 is for scaling purposes
+            float deltaMagnitudeDiff = (prevTouchDeltaMag - touchDeltaMag) / -50.0f;
+
+            if (g_SelectedElementTransform.localScale.x + deltaMagnitudeDiff > 1.0f)
+            {
+                g_SelectedElementTransform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+
+            else if (g_SelectedElementTransform.localScale.x + deltaMagnitudeDiff < 0.15f)
+            {
+                g_SelectedElementTransform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            }
+
+            else
+            {
+                g_SelectedElementTransform.localScale = new Vector3(g_SelectedElementTransform.localScale.x + deltaMagnitudeDiff,
+                    g_SelectedElementTransform.localScale.y + deltaMagnitudeDiff, g_SelectedElementTransform.localScale.z);
+            }
+            
+        }
+    }
+
+    private void IconMultiFingerEnded()
+    {
+        // Deselect all the icon annotations
+        //deselectIconAnnotations();
+
+        // Stores the important info of the annotation for the JSON
+        List<float> annotation_information = new List<float>();
+        annotation_information.Add(g_SelectedElementTransform.position.x);
+        annotation_information.Add(g_SelectedElementTransform.position.y);
+        annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
+        annotation_information.Add(g_SelectedElementTransform.localScale.x);
+
+        g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
+
+        isUserIconAnnotating = false;
+    }
+
+    //Line Uni Finger events
+
+    private void LineUniFingerBegan(Vector3 touchedPoint3D)
+    {
+        // Initial point for a line annotation
+        if (g_ButtonManager.g_LineButtonClicked)
+        {
+            resetLineAnnotation();
+            g_CurrentLine.Add(touchedPoint3D);
+        }
+
+        isUserLineAnnotating = true;
+    }
+
+    private void LineUniFingerMoved(Vector3 touchedPoint3D)
+    {
+        if (g_ButtonManager.g_LineButtonClicked)
+        {
+            double distance = Mathf.Sqrt(Mathf.Pow((touchedPoint3D.x - g_CurrentLine[g_CurrentLine.Count - 1].x), 2) +
+                Mathf.Pow((touchedPoint3D.y - g_CurrentLine[g_CurrentLine.Count - 1].y), 2));
+            if (distance > 15)
+            {
+                g_CurrentLine.Add(touchedPoint3D);
+                drawLine();
+            }
+        }
+    }
+
+    private void LineUniFingerEnded(Vector3 touchedPoint3D)
+    {
+        // The touch was done to create an icon annotation. Create an icon annotation at the point of touch
+        if (g_ButtonManager.g_PanelButtonClicked)
+        {
+            string imageName = g_ButtonManager.UnselectPanelButton();
+            createIconAnnotation(touchedPoint3D, imageName);
+        }
+        // The touch has to do with line annotations
+        else
+        {
+            // The touch was the end of a line annotation. Create the line with the previously stores points
+            if (g_ButtonManager.g_LineButtonClicked)
+            {
+                g_CurrentLine.Add(touchedPoint3D);
+                drawLine();
+                g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
+                g_AnnotationCounter++;
+            }
+            // The touch was done to create a point annotation. Create the point and draw it
+            else if (g_ButtonManager.g_PointsButtonClicked)
+            {
+                resetLineAnnotation();
+                createPointAnnotation(touchedPoint3D);
+                drawLine();
+                g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
+                g_AnnotationCounter++;
+            }
+        }
+        isUserLineAnnotating = false;
+        isUserIconAnnotating = false;
+    }
+
+    private bool isPixelTransparent(List<RaycastResult> raycastResults)
+    {
+        if (raycastResults != null)
+        {
+            // Current angular displacement from the seleced object, in radians 
+            float rad = ((-raycastResults[0].gameObject.transform.eulerAngles.z) * Mathf.PI) / 180.0f;
+
+            // Translating the point from screen space to selected object space
+            float transX = raycastResults[0].screenPosition.x - raycastResults[0].gameObject.transform.position.x;
+            float transY = raycastResults[0].screenPosition.y - raycastResults[0].gameObject.transform.position.y;
+
+            // Rotating the point to achieve the position in the non-rotated image
+            float xProj = Mathf.Cos(rad) * transX - Mathf.Sin(rad) * transY;
+            float yProj = Mathf.Sin(rad) * transX + Mathf.Cos(rad) * transY;
+
+            // Correct the y pos, as it is in a negative coordinate system
+            float posInImageY = raycastResults[0].gameObject.GetComponent<RectTransform>().rect.height + yProj;
+
+            float descaledXProj = (xProj) * (0.3f / raycastResults[0].gameObject.transform.localScale.x);
+            float descaledYProj = (yProj) * (0.3f / raycastResults[0].gameObject.transform.localScale.y);
+
+            // Extract the selected object sprite's texture
+            Texture2D myText = raycastResults[0].gameObject.GetComponent<Image>().sprite.texture;
+
+            // Map the point from selected object space to sprite space
+            float finalX = (myText.width * descaledXProj) / (raycastResults[0].gameObject.GetComponent<RectTransform>().rect.width);
+            float finalY = (myText.height * descaledYProj) / (raycastResults[0].gameObject.GetComponent<RectTransform>().rect.height);
+
+            // Obtain the color values from the pixel at the selected point position
+            Color myColor = myText.GetPixel((int)finalX, (int)finalY);
+
+            // Return value
+            bool isTransparent;
+
+            // Check if the alpha value is 0 (if it is transparent)
+            if (myColor.a == 0)
+            {
+                isTransparent = true;
             }
             else
             {
-                g_UICounter = 0;
+                isTransparent = false;
             }
+
+            return isTransparent;
         }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void setPoseWhileAnnotating(float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float rotW)
+    {
+        g_PoseParameters = new List<float>();
+        g_PoseParameters.Add(posX);
+        g_PoseParameters.Add(posY);
+        g_PoseParameters.Add(posZ);
+        g_PoseParameters.Add(rotX);
+        g_PoseParameters.Add(rotY);
+        g_PoseParameters.Add(rotZ);
+        g_PoseParameters.Add(rotW);
     }
 
     public void EraseSelected()
     {
         if(g_SelectedElementTransform != null)
         {
-            g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null);
+            g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
 
             Destroy(g_SelectedElementTransform.gameObject);
         }
@@ -309,7 +444,7 @@ public class TouchEvents : MonoBehaviour
         {
             if (child.name != currentName)
             {
-                g_JsonManager.createJSONable(int.Parse(child.gameObject.name), "DeleteAnnotationCommand", null, null, null);
+                g_JsonManager.createJSONable(int.Parse(child.gameObject.name), "DeleteAnnotationCommand", null, null, null, null);
                 currentName = child.name;
             }
             Destroy(child.gameObject);
@@ -317,7 +452,7 @@ public class TouchEvents : MonoBehaviour
 
         foreach (Transform child in g_IconAnnotationsContainer.transform)
         {
-            g_JsonManager.createJSONable(int.Parse(child.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null);
+            g_JsonManager.createJSONable(int.Parse(child.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
             Destroy(child.gameObject);
         }
 
@@ -330,11 +465,14 @@ public class TouchEvents : MonoBehaviour
         {
             g_ButtonManager.ImageDeselected(child.gameObject);
         }
+
+        g_SelectedElementTransform = null;
     }
 
     private void assetLoading()
     {
-        isUserAnnotating = false;
+        isUserIconAnnotating = false;
+        isUserLineAnnotating = false;
 
         if (g_LineAnnotationMaterial == null)
         {
@@ -375,11 +513,11 @@ public class TouchEvents : MonoBehaviour
 
     private void assetInitialization()
     {
+        g_PoseParameters = new List<float>();
         g_ButtonManager = this.GetComponent<ButtonClicking>();
         g_JsonManager = this.GetComponent<JSONManager>();
         g_SelectedElementTransform = null;
         g_AnnotationCounter = 0;
-        g_UICounter = 0;
     }
 
     private void drawLine()
@@ -468,7 +606,7 @@ public class TouchEvents : MonoBehaviour
         annotation_information.Add(NewImageContainer.transform.localEulerAngles.z);
         annotation_information.Add(NewImageContainer.transform.localScale.x);
 
-        g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", null, p_ImageName, annotation_information);
+        g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", null, p_ImageName, annotation_information, g_PoseParameters);
         g_AnnotationCounter++;
     }
 }

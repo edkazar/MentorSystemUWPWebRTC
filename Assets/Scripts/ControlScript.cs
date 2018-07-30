@@ -18,6 +18,7 @@ using HoloPoseClient.Signalling;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.Graphics.Imaging;
 
 using Newtonsoft.Json.Linq;
 #endif
@@ -69,7 +70,11 @@ public class ControlScript : MonoBehaviour
     private int MainTextureHeight = 756;
     private Texture2D MainTex, YTex, UTex, VTex;
 
+    private byte[] g_plane;
+
     public GameObject TextItemPrefab;
+
+    private bool g_SavePoseInfo;
 
     private enum Status
     {
@@ -224,6 +229,8 @@ public class ControlScript : MonoBehaviour
 
         g_WebRTCPanel.GetComponent<CanvasGroup>().alpha = 0f;
         g_WebRTCPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        g_SavePoseInfo = true;
     }
 
     private void OnEnable()
@@ -247,17 +254,18 @@ public class ControlScript : MonoBehaviour
             Plugin.GetRemotePrimaryTexture(RemoteTextureWidth, RemoteTextureHeight, out nativeTex);
             primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
             RemoteVideoImage.texture = primaryPlaybackTexture;
+
+            MainTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+            YTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+            UTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+            VTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
             if (Hololens == true)
             {
                 RemoteVideoImage.transform.gameObject.SetActive(false);
-
-                MainTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
-                Stabilization.Instance.MainTex = MainTex;
-                YTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
-                Stabilization.Instance.YTex = YTex;
-                UTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
-                Stabilization.Instance.UTex = UTex;
-                VTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+        
+                Stabilization.Instance.MainTex = MainTex;          
+                Stabilization.Instance.YTex = YTex;                
+                Stabilization.Instance.UTex = UTex;               
                 Stabilization.Instance.VTex = VTex;
             }
             //juan andres drone
@@ -361,6 +369,35 @@ public class ControlScript : MonoBehaviour
     {
         //LastPeerPoseLabel.text = Plugin.getFloat().toString();
         //Plugin.initChessPoseController();
+
+        if (Input.GetKeyDown("space"))
+        {
+            Texture2D textin = new Texture2D(1344, 756, TextureFormat.RGBA32, false);
+
+            byte[] myBytes = MainTex.GetRawTextureData();
+            byte[] newbyte = new byte[myBytes.Length * 4];
+            int i;
+            for (i = 0; i < myBytes.Length; i++)
+            {
+                newbyte[i*4] = myBytes[i];
+                newbyte[(i*4)+1] = myBytes[i];
+                newbyte[(i*4)+2] = myBytes[i];
+                newbyte[(i*4)+3] = 0;
+            }
+
+            //encode as png and blah.
+
+#if !UNITY_EDITOR
+        counter++;
+        UnityEngine.WSA.Application.InvokeOnAppThread(async () =>
+        {
+            StorageFolder rootFolder = ApplicationData.Current.LocalFolder;
+            StorageFile sampleFile = await rootFolder.CreateFileAsync("testImage"+counter.ToString()+".jpg",CreationCollisionOption.GenerateUniqueName);
+            await FileIO.WriteBytesAsync(sampleFile,newbyte);
+        }, false);
+#endif
+        }
+
 
         lock (this)
         {
@@ -473,27 +510,29 @@ public class ControlScript : MonoBehaviour
     }
 
     int counter = 0;
+    bool ToInit = false;
 
     // fired whenever we get a video frame from the remote peer.
     // if there is pose data, posXYZ and rotXYZW will have non-zero values.
-    private void Conductor_OnPeerRawFrame(uint width, uint height,
+    private async void Conductor_OnPeerRawFrame(uint width, uint height,
             byte[] yPlane, uint yPitch, byte[] vPlane, uint vPitch, byte[] uPlane, uint uPitch,
             float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float rotW)
     {
+        g_plane = yPlane;
         if (Hololens == true)
         {
-            if (g_EventsScript.isUserAnnotating == false)
+            if (g_EventsScript.isUserIconAnnotating == false && g_EventsScript.isUserLineAnnotating == false)
             {
                 UnityEngine.WSA.Application.InvokeOnAppThread(() =>
                 {
-                //Set property on UI thread
-                //Debug.Log("ControlScript: OnPeerRawFrame " + width + " " + height + " " + posX + " " + posY + " " + posZ + " " + rotX + " " + rotY + " " + rotZ + " " + rotW);
+                    //Set property on UI thread
+                    //Debug.Log("ControlScript: OnPeerRawFrame " + width + " " + height + " " + posX + " " + posY + " " + posZ + " " + rotX + " " + rotY + " " + rotZ + " " + rotW);
 
-                if (LastPeerPoseLabel != null)
+                    if (LastPeerPoseLabel != null)
                     {
                         LastPeerPoseLabel.text = posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW;
                     }
-
+                    
                     Stabilization.Instance.Stablize(new Quaternion(rotX, rotY, rotZ, rotW), new Vector3(posX, posY, posZ));
                     YTex.LoadRawTextureData(yPlane);
                     YTex.Apply();
@@ -502,17 +541,46 @@ public class ControlScript : MonoBehaviour
                     VTex.LoadRawTextureData(vPlane);
                     VTex.Apply();
 
-                    /*byte[] bytes = Stabilization.Instance.MainTex.EncodeToPNG();
-
-#if !UNITY_EDITOR
-                    if (bytes != null)
+                    if (ToInit)
                     {
-                        StorageFolder rootFolder = ApplicationData.Current.LocalFolder;
-                        StorageFile sampleFile = await rootFolder.CreateFileAsync("testVideo"+counter.ToString()+".png", CreationCollisionOption.ReplaceExisting);
-                        File.WriteAllBytes(sampleFile.Path, bytes);
-                        counter++;
-                    }*
-#endif*/
+                        Matrix4x4 cam = Matrix4x4.identity;
+                        cam.SetTRS(new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW), Vector3.one);
+                        cam.m02 = -cam.m02;
+                        cam.m12 = -cam.m12;
+                        cam.m20 = -cam.m20;
+                        cam.m21 = -cam.m21;
+                        cam.m23 = -cam.m23;
+                        Stabilization.Instance.MainCamera = cam;
+                        Graphics.CopyTexture(YTex, MainTex);//calling this to update background
+                        mainCamera.transform.SetPositionAndRotation(cam.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(cam.GetColumn(2), cam.GetColumn(1)));
+
+                        JObject message = new JObject();
+                        message["posX"] = posX;
+                        message["posY"] = posY;
+                        message["posZ"] = posZ;
+                        message["rotX"] = rotX;
+                        message["rotY"] = rotY;
+                        message["rotZ"] = rotZ;
+                        message["rotW"] = rotW;
+
+                        JObject container = new JObject();
+                        container["message"] = message;
+#if !UNITY_EDITOR
+                        Conductor.Instance.SendMessage(Windows.Data.Json.JsonObject.Parse(container.ToString()));
+#endif
+
+                        ToInit = false;
+                    }
+
+                    g_SavePoseInfo = true;
+
+                    if (Stabilization.Instance.g_UpdatePose == true)
+                    {
+                        //calling this to update background
+                        Graphics.CopyTexture(YTex, MainTex);
+                        Stabilization.Instance.g_UpdatePose = false;
+                    }
+
                 }, false);
                 //GetComponent<Renderer>().material.mainTexture = tex;
                 //Debug.Log(posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW);
@@ -521,6 +589,14 @@ public class ControlScript : MonoBehaviour
                 //var primaryPlaybackTexture2 = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
                 //Stabilization.Instance.SetTexture(primaryPlaybackTexture2);
                 //byte[] imagebytes = RemoteVideoImage.texture.GetRawTextureData();
+            }
+            else
+            {
+                if (g_SavePoseInfo)
+                {
+                    g_EventsScript.setPoseWhileAnnotating(posX, posY, posZ, rotX, rotY, rotZ, rotW);
+                    g_SavePoseInfo = false;
+                }
             }
         }
     }
@@ -577,9 +653,10 @@ public class ControlScript : MonoBehaviour
                 {
                     Stabilization.Instance.InitCamera(CameraWidth, CameraHeight, Camerafx, Camerafy, Cameracx, Cameracy);
                     Stabilization.Instance.InitPlane(planePoints);
-                    Stabilization.Instance.MainCamera = planePoints2;
-                    Graphics.CopyTexture(YTex, MainTex);
-                    mainCamera.transform.SetPositionAndRotation(planePoints2.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(planePoints2.GetColumn(2), planePoints2.GetColumn(1)));
+                    ToInit = true;
+                    //Stabilization.Instance.MainCamera = planePoints2;
+                    //Graphics.CopyTexture(YTex, MainTex);//calling this to update gackground
+                    //mainCamera.transform.SetPositionAndRotation(planePoints2.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(planePoints2.GetColumn(2), planePoints2.GetColumn(1)));
                 }, false);
 
                 //Debug.Log(CameraWidth + " " + CameraHeight + " " + Camerafx + " " + Camerafy + " " + Cameracx + " " + Cameracy);
@@ -592,7 +669,10 @@ public class ControlScript : MonoBehaviour
                 Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
                 Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
                 Matrix4x4 pose = new Matrix4x4(col1, col2, col3, col4);
-                Stabilization.Instance.Stablize(pose);
+                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                {
+                    Stabilization.Instance.Stablize(pose);
+                }, false);
 
                 //Debug.Log(pose.ToString());
             }

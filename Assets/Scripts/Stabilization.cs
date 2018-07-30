@@ -14,8 +14,12 @@ public class Stabilization : Singleton<Stabilization>
     public Texture2D UTex { set { Material.SetTexture("_UTex", value); } }
     public Texture2D VTex { set { Material.SetTexture("_VTex", value); } }
 
+    private Matrix4x4 CurrentPose;
+    public bool g_UpdatePose { get; set; }
+
     public Stabilization()
     {
+        g_UpdatePose = false;
         Material = new Material(Shader.Find("Custom/PTM"));
     }
 
@@ -43,6 +47,7 @@ public class Stabilization : Singleton<Stabilization>
     public void Stablize(Matrix4x4 m)
     {
         Material.SetMatrix("camera", m.inverse);
+        //CurrentPose = m;
     }
 
     public void Stablize(Quaternion rotation, Vector3 position)
@@ -54,6 +59,35 @@ public class Stabilization : Singleton<Stabilization>
         cam.m20 = -cam.m20;
         cam.m21 = -cam.m21;
         cam.m23 = -cam.m23;
+        MatrixDistance(cam);
         Material.SetMatrix("camera", cam.inverse);
+    }
+
+    public float MatrixDistance(Matrix4x4 p_Pose)
+    {
+        float distanceR = 0.0f;
+        float distanceT = 0.0f;
+
+        distanceR += Mathf.Pow(CurrentPose.m00 - p_Pose.m00, 2);
+        distanceR += Mathf.Pow(CurrentPose.m01 - p_Pose.m01, 2);
+        distanceR += Mathf.Pow(CurrentPose.m02 - p_Pose.m02, 2);
+        distanceR += Mathf.Pow(CurrentPose.m10 - p_Pose.m10, 2);
+        distanceR += Mathf.Pow(CurrentPose.m11 - p_Pose.m11, 2);
+        distanceR += Mathf.Pow(CurrentPose.m12 - p_Pose.m12, 2);
+        distanceR += Mathf.Pow(CurrentPose.m20 - p_Pose.m20, 2);
+        distanceR += Mathf.Pow(CurrentPose.m21 - p_Pose.m21, 2);
+        distanceR += Mathf.Pow(CurrentPose.m22 - p_Pose.m22, 2);
+        distanceR = Mathf.Sqrt(distanceR);
+
+        distanceT += Mathf.Pow(CurrentPose.m03 - p_Pose.m03, 2);
+        distanceT += Mathf.Pow(CurrentPose.m13 - p_Pose.m13, 2);
+        distanceT += Mathf.Pow(CurrentPose.m23 - p_Pose.m23, 2);
+        distanceT = Mathf.Sqrt(distanceT);
+
+        //Refine this thresholds for better results on the background updating
+        if ((1.73f < distanceR && distanceR < 1.75f) && (0.173f < distanceT && distanceT < 0.182f))
+            g_UpdatePose = true;
+
+        return 0;
     }
 }

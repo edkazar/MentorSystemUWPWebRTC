@@ -27,6 +27,7 @@ public struct JSONable
     public List<Vector3> myPoints; // Points representing line
     public string annotation_name; // Name of the icon annotation
     public List<float> annotation_information; // Rot,scale,etc.
+    public List<float> pose_information; // HoloLens Stabilization specific information
 };
 
 public class JSONManager : MonoBehaviour
@@ -52,7 +53,7 @@ public class JSONManager : MonoBehaviour
     // Instance of the STAR WebRTC Handler
     public StarWebrtcContext starWebrtcContext { get; set; }
 
-    // Instance of the STAR WebRTC Handler
+    // Whether or not to send the messages using WebRTC
     public bool JSONThroughWebRTC { get; set; }
 
     // Temp json files that have been sent
@@ -69,8 +70,6 @@ public class JSONManager : MonoBehaviour
         isJsonBeingCreated = false;
         sentJSONs = new Queue<JObject>();
         JSONThroughWebRTC = true;
-
-
     }
 
     // Update is called once per frame
@@ -88,22 +87,22 @@ public class JSONManager : MonoBehaviour
                 {
                     if (to_create.annotation_name == null)
                     {
-                        constructLineJSONMessage(to_create.id, to_create.command, to_create.myPoints);
+                        constructLineJSONMessage(to_create.id, to_create.command, to_create.myPoints, to_create.pose_information);
                     }
                     else
                     {
-                        constructIconAnnotationJSONMessage(to_create.id, to_create.command, to_create.annotation_name, to_create.annotation_information);
+                        constructIconAnnotationJSONMessage(to_create.id, to_create.command, to_create.annotation_name, to_create.annotation_information, to_create.pose_information);
                     }
                 }
                 else if (UPDATE_ANNOTATION_COMMAND.Equals(to_create.command, System.StringComparison.Ordinal))
                 {
                     if (to_create.annotation_name == null)
                     {
-                        constructLineJSONMessage(to_create.id, to_create.command, to_create.myPoints);
+                        constructLineJSONMessage(to_create.id, to_create.command, to_create.myPoints, to_create.pose_information);
                     }
                     else
                     {
-                        constructIconAnnotationJSONMessage(to_create.id, to_create.command, to_create.annotation_name, to_create.annotation_information);
+                        constructIconAnnotationJSONMessage(to_create.id, to_create.command, to_create.annotation_name, to_create.annotation_information, to_create.pose_information);
                     }
                 }
                 else if (DELETE_ANNOTATION_COMMAND.Equals(to_create.command, System.StringComparison.Ordinal))
@@ -121,7 +120,7 @@ public class JSONManager : MonoBehaviour
          * Return: None
          */
     public void createJSONable(int id, string command, List<Vector3> myPoints, string annotation_name,
-    List<float> annotation_information)
+    List<float> annotation_information, List<float> pose_information)
     {
         JSONable to_add = new JSONable();
 
@@ -131,9 +130,9 @@ public class JSONManager : MonoBehaviour
         to_add.annotation_name = annotation_name;
 
         to_add.annotation_information = annotation_information;
+        to_add.pose_information = pose_information;
 
         JSONs_to_create.Enqueue(to_add);
-
     }
 
     /*
@@ -141,12 +140,13 @@ public class JSONManager : MonoBehaviour
      * Parameters: Line Id, message command, points of the line
      * Return: None
      */
-    private void constructLineJSONMessage(int id, string command, List<Vector3> myPoints)
+    private void constructLineJSONMessage(int id, string command, List<Vector3> myPoints, List<float> pose_information)
     {
 #if ENABLE_WINMD_SUPPORT
         JObject message = new JObject();
         JObject annotation_memory = new JObject();
         JObject initialAnnotation = new JObject();
+        JObject poseInformationJson =  new JObject();
         JArray annotationPoints = new JArray();
 
         /*JsonObject message = new JsonObject();
@@ -172,6 +172,30 @@ public class JSONManager : MonoBehaviour
 
         message["annotation_memory"] = annotation_memory;
 
+        if (pose_information.Count > 0)
+        {
+            poseInformationJson["posX"] = pose_information[0];
+            poseInformationJson["posY"] = pose_information[1];
+            poseInformationJson["posZ"] = pose_information[2];
+            poseInformationJson["rotX"] = pose_information[3];
+            poseInformationJson["rotY"] = pose_information[4];
+            poseInformationJson["rotZ"] = pose_information[5];
+            poseInformationJson["rotW"] = pose_information[6];
+            
+        }
+        else
+        {
+            poseInformationJson["posX"] = 0;
+            poseInformationJson["posY"] = 0;
+            poseInformationJson["posZ"] = 0;
+            poseInformationJson["rotX"] = 0;
+            poseInformationJson["rotY"] = 0;
+            poseInformationJson["rotZ"] = 0;
+            poseInformationJson["rotW"] = 0;
+        }
+
+        message["pose_information"] = poseInformationJson;
+
         //Writes JSON Value to a file
         sentJSONs.Enqueue(message);
         writeJSONonFile(message);
@@ -184,7 +208,7 @@ public class JSONManager : MonoBehaviour
      * Parameters (2): Annotation's important information
      * Return: None
      */
-    void constructIconAnnotationJSONMessage(int id, string command, string annotation_name, List<float> annotation_information)
+    void constructIconAnnotationJSONMessage(int id, string command, string annotation_name, List<float> annotation_information, List<float> pose_information)
     {
 #if ENABLE_WINMD_SUPPORT
         /*
@@ -196,6 +220,7 @@ public class JSONManager : MonoBehaviour
          */
         JObject message = new JObject();
         JObject annotation_memory = new JObject();
+        JObject poseInformationJson =  new JObject();
         JObject initialAnnotation = new JObject();
         JArray annotationPoints = new JArray();
 
@@ -217,6 +242,30 @@ public class JSONManager : MonoBehaviour
         annotation_memory["annotation"] = initialAnnotation;
 
         message["annotation_memory"] = annotation_memory;
+
+        if (pose_information.Count > 0)
+        {
+            poseInformationJson["posX"] = pose_information[0];
+            poseInformationJson["posY"] = pose_information[1];
+            poseInformationJson["posZ"] = pose_information[2];
+            poseInformationJson["rotX"] = pose_information[3];
+            poseInformationJson["rotY"] = pose_information[4];
+            poseInformationJson["rotZ"] = pose_information[5];
+            poseInformationJson["rotW"] = pose_information[6];
+            
+        }
+        else
+        {
+            poseInformationJson["posX"] = 0;
+            poseInformationJson["posY"] = 0;
+            poseInformationJson["posZ"] = 0;
+            poseInformationJson["rotX"] = 0;
+            poseInformationJson["rotY"] = 0;
+            poseInformationJson["rotZ"] = 0;
+            poseInformationJson["rotW"] = 0;
+        }
+
+        message["pose_information"] = poseInformationJson;
 
         //Writes JSON Value to a file
         sentJSONs.Enqueue(message);
