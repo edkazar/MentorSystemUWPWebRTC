@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\bin\x86\Release\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-07-30T22:15:16.629</Modified>
+      <Modified>2018-09-11T16:40:22.165</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\bin\x86\Release\MentorSystemWebRTC.exe">
       <PackagePath>entrypoint\MentorSystemWebRTC.exe</PackagePath>
-      <Modified>2018-07-30T22:14:56.993</Modified>
+      <Modified>2018-09-11T16:40:01.691</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\.nuget\packages\microsoft.applicationinsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -521,7 +521,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Resource.res">
       <PackagePath>Resource.res</PackagePath>
-      <Modified>2018-07-30T22:14:12.165</Modified>
+      <Modified>2018-09-11T16:21:07.581</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
@@ -596,15 +596,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\boot.config">
       <PackagePath>Data\boot.config</PackagePath>
-      <Modified>2018-07-30T22:14:01.194</Modified>
+      <Modified>2018-09-11T16:20:56.364</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\globalgamemanagers">
       <PackagePath>Data\globalgamemanagers</PackagePath>
-      <Modified>2018-07-30T22:14:00.556</Modified>
+      <Modified>2018-09-11T16:20:50.348</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\level0">
       <PackagePath>Data\level0</PackagePath>
-      <Modified>2018-07-30T22:13:58.563</Modified>
+      <Modified>2018-09-11T16:20:48.382</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\Resources\unity default resources">
       <PackagePath>Data\Resources\unity default resources</PackagePath>
@@ -612,39 +612,39 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\Resources\unity_builtin_extra">
       <PackagePath>Data\Resources\unity_builtin_extra</PackagePath>
-      <Modified>2018-07-30T22:14:01.191</Modified>
+      <Modified>2018-09-11T16:20:56.356</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\globalgamemanagers.assets">
       <PackagePath>Data\globalgamemanagers.assets</PackagePath>
-      <Modified>2018-07-30T22:14:00.682</Modified>
+      <Modified>2018-09-11T16:20:51.071</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\resources.assets">
       <PackagePath>Data\resources.assets</PackagePath>
-      <Modified>2018-07-30T22:14:00.707</Modified>
+      <Modified>2018-09-11T16:20:51.132</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\sharedassets0.assets">
       <PackagePath>Data\sharedassets0.assets</PackagePath>
-      <Modified>2018-07-30T22:14:00.833</Modified>
+      <Modified>2018-09-11T16:20:52.238</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\level0.resS">
       <PackagePath>Data\level0.resS</PackagePath>
-      <Modified>2018-07-30T22:13:58.552</Modified>
+      <Modified>2018-09-11T16:20:48.372</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\resources.assets.resS">
       <PackagePath>Data\resources.assets.resS</PackagePath>
-      <Modified>2018-07-30T22:14:00.704</Modified>
+      <Modified>2018-09-11T16:20:51.128</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\sharedassets0.assets.resS">
       <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
-      <Modified>2018-07-30T22:14:00.830</Modified>
+      <Modified>2018-09-11T16:20:52.234</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\managedAssemblies.txt">
       <PackagePath>Data\managedAssemblies.txt</PackagePath>
-      <Modified>2018-07-30T22:14:12.120</Modified>
+      <Modified>2018-09-11T16:21:07.497</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Data\nativePlugins.txt">
       <PackagePath>Data\nativePlugins.txt</PackagePath>
-      <Modified>2018-07-30T22:14:12.123</Modified>
+      <Modified>2018-09-11T16:21:07.500</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17134.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -657,243 +657,243 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Assembly-CSharp.dll">
       <PackagePath>Assembly-CSharp.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.678</Modified>
+      <Modified>2018-09-11T16:40:18.650</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.SpriteMaskModule.dll">
       <PackagePath>UnityEngine.SpriteMaskModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.699</Modified>
+      <Modified>2018-09-11T16:40:18.667</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.SpriteShapeModule.dll">
       <PackagePath>UnityEngine.SpriteShapeModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.719</Modified>
+      <Modified>2018-09-11T16:40:18.688</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.StyleSheetsModule.dll">
       <PackagePath>UnityEngine.StyleSheetsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.746</Modified>
+      <Modified>2018-09-11T16:40:18.715</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.TerrainModule.dll">
       <PackagePath>UnityEngine.TerrainModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.774</Modified>
+      <Modified>2018-09-11T16:40:18.745</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.TerrainPhysicsModule.dll">
       <PackagePath>UnityEngine.TerrainPhysicsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.795</Modified>
+      <Modified>2018-09-11T16:40:18.761</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.TextRenderingModule.dll">
       <PackagePath>UnityEngine.TextRenderingModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.827</Modified>
+      <Modified>2018-09-11T16:40:18.788</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.TilemapModule.dll">
       <PackagePath>UnityEngine.TilemapModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.853</Modified>
+      <Modified>2018-09-11T16:40:18.812</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UIElementsModule.dll">
       <PackagePath>UnityEngine.UIElementsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.928</Modified>
+      <Modified>2018-09-11T16:40:18.908</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UIModule.dll">
       <PackagePath>UnityEngine.UIModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.957</Modified>
+      <Modified>2018-09-11T16:40:18.936</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UNETModule.dll">
       <PackagePath>UnityEngine.UNETModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:13.990</Modified>
+      <Modified>2018-09-11T16:40:18.977</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityAnalyticsModule.dll">
       <PackagePath>UnityEngine.UnityAnalyticsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.019</Modified>
+      <Modified>2018-09-11T16:40:19.002</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityConnectModule.dll">
       <PackagePath>UnityEngine.UnityConnectModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.045</Modified>
+      <Modified>2018-09-11T16:40:19.028</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestAssetBundleModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestAssetBundleModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.070</Modified>
+      <Modified>2018-09-11T16:40:19.069</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestAudioModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestAudioModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.094</Modified>
+      <Modified>2018-09-11T16:40:19.104</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.127</Modified>
+      <Modified>2018-09-11T16:40:19.139</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestTextureModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestTextureModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.147</Modified>
+      <Modified>2018-09-11T16:40:19.168</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestWWWModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestWWWModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.170</Modified>
+      <Modified>2018-09-11T16:40:19.188</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.VehiclesModule.dll">
       <PackagePath>UnityEngine.VehiclesModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.192</Modified>
+      <Modified>2018-09-11T16:40:19.215</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.VideoModule.dll">
       <PackagePath>UnityEngine.VideoModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.219</Modified>
+      <Modified>2018-09-11T16:40:19.259</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.VRModule.dll">
       <PackagePath>UnityEngine.VRModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.264</Modified>
+      <Modified>2018-09-11T16:40:19.311</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.WebModule.dll">
       <PackagePath>UnityEngine.WebModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.290</Modified>
+      <Modified>2018-09-11T16:40:19.343</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.WindModule.dll">
       <PackagePath>UnityEngine.WindModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.314</Modified>
+      <Modified>2018-09-11T16:40:19.372</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.XRModule.dll">
       <PackagePath>UnityEngine.XRModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.344</Modified>
+      <Modified>2018-09-11T16:40:19.424</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.SharedInternalsModule.dll">
       <PackagePath>UnityEngine.SharedInternalsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.371</Modified>
+      <Modified>2018-09-11T16:40:19.456</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ScreenCaptureModule.dll">
       <PackagePath>UnityEngine.ScreenCaptureModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.392</Modified>
+      <Modified>2018-09-11T16:40:19.475</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.Physics2DModule.dll">
       <PackagePath>UnityEngine.Physics2DModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.449</Modified>
+      <Modified>2018-09-11T16:40:19.512</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.AccessibilityModule.dll">
       <PackagePath>UnityEngine.AccessibilityModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.471</Modified>
+      <Modified>2018-09-11T16:40:19.533</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.AIModule.dll">
       <PackagePath>UnityEngine.AIModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.505</Modified>
+      <Modified>2018-09-11T16:40:19.603</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.AnimationModule.dll">
       <PackagePath>UnityEngine.AnimationModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.557</Modified>
+      <Modified>2018-09-11T16:40:19.657</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ARModule.dll">
       <PackagePath>UnityEngine.ARModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.588</Modified>
+      <Modified>2018-09-11T16:40:19.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.AssetBundleModule.dll">
       <PackagePath>UnityEngine.AssetBundleModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.617</Modified>
+      <Modified>2018-09-11T16:40:19.718</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.AudioModule.dll">
       <PackagePath>UnityEngine.AudioModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.655</Modified>
+      <Modified>2018-09-11T16:40:19.753</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ClothModule.dll">
       <PackagePath>UnityEngine.ClothModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:14.680</Modified>
+      <Modified>2018-09-11T16:40:19.787</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.CoreModule.dll">
       <PackagePath>UnityEngine.CoreModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.129</Modified>
+      <Modified>2018-09-11T16:40:20.280</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.CrashReportingModule.dll">
       <PackagePath>UnityEngine.CrashReportingModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.173</Modified>
+      <Modified>2018-09-11T16:40:20.335</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.DirectorModule.dll">
       <PackagePath>UnityEngine.DirectorModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.198</Modified>
+      <Modified>2018-09-11T16:40:20.370</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.dll">
       <PackagePath>UnityEngine.dll</PackagePath>
-      <Modified>2018-07-30T22:14:05.769</Modified>
+      <Modified>2018-09-11T16:21:00.294</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.GameCenterModule.dll">
       <PackagePath>UnityEngine.GameCenterModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.216</Modified>
+      <Modified>2018-09-11T16:40:20.397</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.GridModule.dll">
       <PackagePath>UnityEngine.GridModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.240</Modified>
+      <Modified>2018-09-11T16:40:20.421</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ImageConversionModule.dll">
       <PackagePath>UnityEngine.ImageConversionModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.260</Modified>
+      <Modified>2018-09-11T16:40:20.441</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.IMGUIModule.dll">
       <PackagePath>UnityEngine.IMGUIModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.306</Modified>
+      <Modified>2018-09-11T16:40:20.500</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.InputModule.dll">
       <PackagePath>UnityEngine.InputModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.331</Modified>
+      <Modified>2018-09-11T16:40:20.523</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.JSONSerializeModule.dll">
       <PackagePath>UnityEngine.JSONSerializeModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.355</Modified>
+      <Modified>2018-09-11T16:40:20.543</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ParticlesLegacyModule.dll">
       <PackagePath>UnityEngine.ParticlesLegacyModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.376</Modified>
+      <Modified>2018-09-11T16:40:20.600</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.ParticleSystemModule.dll">
       <PackagePath>UnityEngine.ParticleSystemModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.423</Modified>
+      <Modified>2018-09-11T16:40:20.644</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.PerformanceReportingModule.dll">
       <PackagePath>UnityEngine.PerformanceReportingModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.448</Modified>
+      <Modified>2018-09-11T16:40:20.674</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.PhysicsModule.dll">
       <PackagePath>UnityEngine.PhysicsModule.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.482</Modified>
+      <Modified>2018-09-11T16:40:20.705</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\HoloPoseClientCore.dll">
       <PackagePath>HoloPoseClientCore.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.552</Modified>
+      <Modified>2018-09-11T16:40:20.767</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.636</Modified>
+      <Modified>2018-09-11T16:40:20.858</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.Timeline.dll">
       <PackagePath>UnityEngine.Timeline.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.723</Modified>
+      <Modified>2018-09-11T16:40:20.933</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\SocketIoClientDotNet.dll">
       <PackagePath>SocketIoClientDotNet.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.755</Modified>
+      <Modified>2018-09-11T16:40:20.972</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.UI.dll">
       <PackagePath>UnityEngine.UI.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.872</Modified>
+      <Modified>2018-09-11T16:40:21.137</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.SpatialTracking.dll">
       <PackagePath>UnityEngine.SpatialTracking.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.892</Modified>
+      <Modified>2018-09-11T16:40:21.161</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.Analytics.dll">
       <PackagePath>UnityEngine.Analytics.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.922</Modified>
+      <Modified>2018-09-11T16:40:21.205</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\EngineIoClientDotNet.dll">
       <PackagePath>EngineIoClientDotNet.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.954</Modified>
+      <Modified>2018-09-11T16:40:21.243</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.HoloLens.dll">
       <PackagePath>UnityEngine.HoloLens.dll</PackagePath>
-      <Modified>2018-07-30T22:15:15.985</Modified>
+      <Modified>2018-09-11T16:40:21.281</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.StandardEvents.dll">
       <PackagePath>UnityEngine.StandardEvents.dll</PackagePath>
-      <Modified>2018-07-30T22:15:16.018</Modified>
+      <Modified>2018-09-11T16:40:21.310</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\UnityEngine.Networking.dll">
       <PackagePath>UnityEngine.Networking.dll</PackagePath>
-      <Modified>2018-07-30T22:15:16.122</Modified>
+      <Modified>2018-09-11T16:40:21.445</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\edkaz\Documents\Unity Projects\MentorSystemWebRTC\App\MentorSystemWebRTC\bin\x86\Release\Core\MentorSystemWebRTC.exe">
       <PackagePath>MentorSystemWebRTC.exe</PackagePath>
-      <Modified>2018-07-30T22:15:16.622</Modified>
+      <Modified>2018-09-11T16:40:22.157</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

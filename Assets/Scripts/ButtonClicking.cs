@@ -18,6 +18,7 @@ public class ButtonClicking : MonoBehaviour
     private Transform g_PointsButton;
 
     public bool g_TrackHandsButtonClicked { get; set; }
+    public bool g_InitCameraButtonClicked { get; set; }
     public bool g_LineButtonClicked { get; set; }
     public bool g_PointsButtonClicked { get; set; }
     public bool g_PanelButtonClicked { get; set; }
@@ -76,6 +77,14 @@ public class ButtonClicking : MonoBehaviour
         }
     }
 
+    public void onClickInitCameraButton()
+    {
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_InitCameraButtonClicked = true;
+        }
+    }
+
     public void onClickLinesButton()
     {
         if (g_EventManager.g_UserInterface.activeSelf)
@@ -87,6 +96,12 @@ public class ButtonClicking : MonoBehaviour
             {
                 g_PointsButtonClicked = !g_PointsButtonClicked;
                 changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
+            }
+
+            if (g_PanelButtonClicked)
+            {
+                g_PanelButtonClicked = !g_PanelButtonClicked;
+                changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
             }
         }
     }
@@ -102,6 +117,12 @@ public class ButtonClicking : MonoBehaviour
             {
                 g_LineButtonClicked = !g_LineButtonClicked;
                 changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
+            }
+
+            if (g_PanelButtonClicked)
+            {
+                g_PanelButtonClicked = !g_PanelButtonClicked;
+                changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
             }
         }
     }
@@ -139,13 +160,21 @@ public class ButtonClicking : MonoBehaviour
     {
         if (g_EventManager.g_UserInterface.activeSelf)
         {
-            if (g_PanelButtonClicked)
-            {
-                changeButtonColor(false, g_TempPressedObject, true);
-            }
-            g_PanelButtonClicked = true;
+            g_PanelButtonClicked = !g_PanelButtonClicked;
             g_TempPressedObject = EventSystem.current.currentSelectedGameObject;
             changeButtonColor(g_PanelButtonClicked, g_TempPressedObject, true);
+        }
+
+        if (g_LineButtonClicked)
+        {
+            g_LineButtonClicked = !g_LineButtonClicked;
+            changeButtonColor(g_LineButtonClicked, g_LinesButton.gameObject, false);
+        }
+
+        if (g_PointsButtonClicked)
+        {
+            g_PointsButtonClicked = !g_PointsButtonClicked;
+            changeButtonColor(g_PointsButtonClicked, g_PointsButton.gameObject, false);
         }
     }
 

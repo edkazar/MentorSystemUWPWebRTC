@@ -135,6 +135,24 @@ public class JSONManager : MonoBehaviour
         JSONs_to_create.Enqueue(to_add);
     }
 
+    private void createReInitCamera()
+    {
+#if ENABLE_WINMD_SUPPORT
+        JObject message = new JObject();
+
+        /*JsonObject message = new JsonObject();
+        JsonObject annotation_memory = new JsonObject();
+        JsonObject initialAnnotation = new JsonObject();
+        JsonArray annotationPoints = new JsonArray();*/
+
+        message["command"] = "REINIT_CAMERA";
+
+        //Writes JSON Value to a file
+        sentJSONs.Enqueue(message);
+        writeJSONonFile(message);
+#endif
+    }
+
     /*
      * Method Overview: Constructs a JSON Object object of a line
      * Parameters: Line Id, message command, points of the line

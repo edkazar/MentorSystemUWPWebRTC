@@ -59,7 +59,7 @@ public class Stabilization : Singleton<Stabilization>
         cam.m20 = -cam.m20;
         cam.m21 = -cam.m21;
         cam.m23 = -cam.m23;
-        MatrixDistance(cam);
+        //MatrixDistance(cam);
         Material.SetMatrix("camera", cam.inverse);
     }
 
@@ -85,7 +85,8 @@ public class Stabilization : Singleton<Stabilization>
         distanceT = Mathf.Sqrt(distanceT);
 
         //Refine this thresholds for better results on the background updating
-        if ((1.73f < distanceR && distanceR < 1.75f) && (0.173f < distanceT && distanceT < 0.182f))
+        //1.73 - 1.75....0.173 - 0.182
+        if ((1.73f < distanceR && distanceR < 1.75f) && (0.177f < distanceT && distanceT < 0.180f))
             g_UpdatePose = true;
 
         return 0;
