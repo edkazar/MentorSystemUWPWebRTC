@@ -135,7 +135,7 @@ public class JSONManager : MonoBehaviour
         JSONs_to_create.Enqueue(to_add);
     }
 
-    private void createReInitCamera()
+    public void createReInitCamera()
     {
 #if ENABLE_WINMD_SUPPORT
         JObject message = new JObject();
@@ -324,7 +324,7 @@ public class JSONManager : MonoBehaviour
         {
             //Starts the process of sending the JSON value over WebRTC
             //starWebrtcContext.sendMessageToAnnotationReceiver(to_text);
-            Conductor.Instance.SendMessage(Windows.Data.Json.JsonObject.Parse(string_to_send));
+            Conductor.Instance.SendMessage("star-trainee", Windows.Data.Json.JsonObject.Parse(string_to_send));
 
             //Let the CommanderCenter know that the message was sent
             isJsonBeingCreated = false;

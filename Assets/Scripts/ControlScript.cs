@@ -46,8 +46,25 @@ public class ControlScript : MonoBehaviour
     public uint RemoteTextureWidth = 640;
     public uint RemoteTextureHeight = 480;
 
-    public RawImage LocalVideoImage;
-    public RawImage RemoteVideoImage;
+    public float OrgUltrasoundTextX = 1636f;
+    public float OrgUltrasoundTextY = 752f;
+
+    /*public RawImage LocalVideoImage;
+    public RawImage RemoteVideoImage;*/
+
+    public RawImage LocalVideoImage_StarMentor;
+    private const string StarMentorName = "star-mentor";
+
+    public RawImage RemoteVideoImage_StarTrainee;
+    private const string StarTraineeName = "star-trainee";
+
+    public RawImage RemoteVideoImage_StarTrainee2;
+    private const string StarTrainee2Name = "star-trainee2";
+
+
+    private const string LocalName = StarMentorName; // change for trainee
+
+    public Dictionary<string, uint> SourceIDs = new Dictionary<string, uint> { { StarMentorName, 0 }, { StarTraineeName, 1 }, { StarTrainee2Name, 2 } };
 
     public InputField ServerAddressInputField;
     public InputField ServerPortInputField;
@@ -112,13 +129,18 @@ public class ControlScript : MonoBehaviour
     private GameObject g_BackgroundImage;
     private GameObject StabilizedQuad;
     private GameObject g_WebRTCButton;
+    private GameObject g_UltrasoundButton;
     private GameObject g_EventSystem;
     private TouchEvents g_EventsScript;
+    private GameObject g_UI;
     public Camera mainCamera;
 
     private Texture2D primaryPlaybackTexture;
 
     public bool Hololens = true;
+
+    private FileStream VideoFile;
+    private BinaryWriter videoWriter;
 
     public ControlScript()
     {
@@ -178,6 +200,24 @@ public class ControlScript : MonoBehaviour
             }
         }
 
+        if (g_UltrasoundButton == null)
+        {
+            g_UltrasoundButton = GameObject.Find("Show/Hide Ultrasound Button");
+            if (g_UltrasoundButton == null)
+            {
+                Debug.LogError("Could not load Show/Hide Ultrasound Button");
+            }
+        }
+
+        if (g_UI == null)
+        {
+            g_UI = GameObject.Find("User Interface");
+            if (g_UI == null)
+            {
+                Debug.LogError("Could not load UI");
+            }
+        }
+
         if (Hololens == true)
             Stabilization.Instance.SetPlane(StabilizedQuad);
 
@@ -220,6 +260,38 @@ public class ControlScript : MonoBehaviour
         ServerAddressInputField.text = ServerAddress;
         ServerPortInputField.text = ServerPort;
         ClientNameInputField.text = ClientName;
+    }
+
+    private void InitMediaTexture(uint id, RawImage videoImage, uint width, uint height, bool isMainTex)
+    {
+        Plugin.CreateMediaPlayback(id);
+        IntPtr nativeTex = IntPtr.Zero;
+        Plugin.GetPrimaryTexture(id, width, height, out nativeTex);
+        var primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)width, (int)height, TextureFormat.BGRA32, false, false, nativeTex);
+
+        if (videoImage != null)
+        {
+            videoImage.texture = primaryPlaybackTexture;
+
+            if (isMainTex)
+            {
+                MainTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+                YTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+                UTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+                VTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+                if (Hololens == true)
+                {
+                    videoImage.transform.gameObject.SetActive(false);
+
+                    Stabilization.Instance.MainTex = MainTex;
+                    Stabilization.Instance.YTex = YTex;
+                    Stabilization.Instance.UTex = UTex;
+                    Stabilization.Instance.VTex = VTex;
+                }
+            }
+        }
+
+    //}
 
         GameObject g_WebRTCPanel = GameObject.Find("WebRTCPanel");
         if (g_WebRTCPanel == null)
@@ -231,25 +303,30 @@ public class ControlScript : MonoBehaviour
         g_WebRTCPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         g_SavePoseInfo = true;
+
     }
 
     private void OnEnable()
     {
         if (LocalStreamEnabled)
         {
-            Plugin.CreateLocalMediaPlayback();
+            /*Plugin.CreateLocalMediaPlayback();
             IntPtr nativeTex = IntPtr.Zero;
             Plugin.GetLocalPrimaryTexture(LocalTextureWidth, LocalTextureHeight, out nativeTex);
             var primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)LocalTextureWidth, (int)LocalTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
             if (LocalVideoImage != null)
             {
                 LocalVideoImage.texture = primaryPlaybackTexture;
-            }
+            }*/
+            InitMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor, LocalTextureWidth, LocalTextureHeight, false);
         }
 
-        if (RemoteVideoImage != null)
-        {
-            Plugin.CreateRemoteMediaPlayback();
+        //if (RemoteVideoImage != null)
+        //{
+            InitMediaTexture(SourceIDs[StarTraineeName], RemoteVideoImage_StarTrainee, RemoteTextureWidth, RemoteTextureHeight, true);
+            InitMediaTexture(SourceIDs[StarTrainee2Name], RemoteVideoImage_StarTrainee2, RemoteTextureWidth, RemoteTextureHeight, false);
+
+            /*Plugin.CreateRemoteMediaPlayback();
             IntPtr nativeTex = IntPtr.Zero;
             Plugin.GetRemotePrimaryTexture(RemoteTextureWidth, RemoteTextureHeight, out nativeTex);
             primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
@@ -267,29 +344,31 @@ public class ControlScript : MonoBehaviour
                 Stabilization.Instance.YTex = YTex;                
                 Stabilization.Instance.UTex = UTex;               
                 Stabilization.Instance.VTex = VTex;
-            }
+            }*/
             //juan andres drone
             //byte[] imagebytes = primaryPlaybackTexture.GetRawTextureData();
 
+        //}
+    }
+
+    private void TeardownMediaTexture(uint id, RawImage videoImage)
+    {
+        if (videoImage != null)
+        {
+            videoImage.texture = null;
         }
+        Plugin.ReleaseMediaPlayback(id);
     }
 
     private void OnDisable()
     {
         if (LocalStreamEnabled)
         {
-            if (LocalVideoImage != null)
-            {
-                LocalVideoImage.texture = null;
-            }
-            Plugin.ReleaseLocalMediaPlayback();
+            TeardownMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor);
         }
 
-        if (RemoteVideoImage != null)
-        {
-            RemoteVideoImage.texture = null;
-        }
-        Plugin.ReleaseRemoteMediaPlayback();
+        TeardownMediaTexture(SourceIDs[StarTraineeName], RemoteVideoImage_StarTrainee);
+        TeardownMediaTexture(SourceIDs[StarTrainee2Name], RemoteVideoImage_StarTrainee2);
     }
 
 
@@ -364,11 +443,53 @@ public class ControlScript : MonoBehaviour
         }
     }
 
+    /*
+     * This section modifies the position and scale of the Ultrasound texture.
+     */
+
+    public void onClickUltrasoundContainerButton()
+    {
+        if (RemoteVideoImage_StarTrainee2.GetComponent<CanvasGroup>().alpha == 1f)
+        {
+            float tempWidth = RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().rect.width;
+            float tempHeight = RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().rect.height;
+
+            if (g_UI.GetComponent<CanvasGroup>().alpha == 0f)
+            {
+                g_UI.GetComponent<CanvasGroup>().alpha = 1f;
+                RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().sizeDelta = new Vector2(tempWidth / 3f, tempHeight / 3f);
+                RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().position = new Vector3(OrgUltrasoundTextX, OrgUltrasoundTextY, 1f);
+            }
+            else
+            {
+                g_UI.GetComponent<CanvasGroup>().alpha = 0f;
+                RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().sizeDelta = new Vector2(tempWidth * 3f, tempHeight * 3f);
+                RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().position = new Vector3(960f, 540f, 1f);
+            }   
+        }
+
+    }
+
 
     private void Update()
     {
         //LastPeerPoseLabel.text = Plugin.getFloat().toString();
         //Plugin.initChessPoseController();
+
+        if(g_EventsScript.UltrasoundButtonClicked)
+        {
+            g_UltrasoundButton.GetComponent<RectTransform>().Rotate(new Vector3(0f, 0f, 180f));
+
+            if (RemoteVideoImage_StarTrainee2.GetComponent<CanvasGroup>().alpha == 0f)
+            {
+                RemoteVideoImage_StarTrainee2.GetComponent<CanvasGroup>().alpha = 1f;
+            }
+            else
+            {
+                RemoteVideoImage_StarTrainee2.GetComponent<CanvasGroup>().alpha = 0f;
+            }
+            g_EventsScript.UltrasoundButtonClicked = false;
+        }    
 
         if (Input.GetKeyDown("space"))
         {
@@ -475,6 +596,8 @@ public class ControlScript : MonoBehaviour
                         {
                             ConnectButton.GetComponentInChildren<Text>().text = "Connect";
                             CallButton.GetComponentInChildren<Text>().text = "Call";
+                            //videoWriter.Dispose();
+                            VideoFile.Dispose();
                         }
                         break;
                     case Status.Connected:
@@ -482,6 +605,9 @@ public class ControlScript : MonoBehaviour
                         {
                             ConnectButton.GetComponentInChildren<Text>().text = "Disconnect";
                             CallButton.GetComponentInChildren<Text>().text = "Call";
+                            String fileToWrite = Path.Combine(Application.persistentDataPath, DateTime.Now.ToString("yyMMdd_HHmmss") + ".raw");
+                            VideoFile = File.Create(fileToWrite);
+                            //videoWriter = new BinaryWriter(VideoFile);
                         }
                         break;
                     case Status.InCall:
@@ -514,90 +640,131 @@ public class ControlScript : MonoBehaviour
 
     // fired whenever we get a video frame from the remote peer.
     // if there is pose data, posXYZ and rotXYZW will have non-zero values.
-    private async void Conductor_OnPeerRawFrame(uint width, uint height,
+    private async void Conductor_OnPeerRawFrame(string peerName, uint width, uint height,
             byte[] yPlane, uint yPitch, byte[] vPlane, uint vPitch, byte[] uPlane, uint uPitch,
             float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float rotW)
     {
-        g_plane = yPlane;
-        if (Hololens == true)
+        if (peerName != StarTrainee2Name)
         {
-            if (g_EventsScript.isUserIconAnnotating == false && g_EventsScript.isUserLineAnnotating == false)
+            g_plane = yPlane;
+            if (Hololens == true)
             {
-                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                //Debug.LogError("Hololensyy");
+
+                if (g_EventsScript.isUserIconAnnotating == false && g_EventsScript.isUserLineAnnotating == false)
                 {
-                    //Set property on UI thread
-                    //Debug.Log("ControlScript: OnPeerRawFrame " + width + " " + height + " " + posX + " " + posY + " " + posZ + " " + rotX + " " + rotY + " " + rotZ + " " + rotW);
-
-                    if (LastPeerPoseLabel != null)
+                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
                     {
-                        LastPeerPoseLabel.text = posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW;
-                    }
-                    
-                    Stabilization.Instance.Stablize(new Quaternion(rotX, rotY, rotZ, rotW), new Vector3(posX, posY, posZ));
-                    YTex.LoadRawTextureData(yPlane);
-                    YTex.Apply();
-                    UTex.LoadRawTextureData(uPlane);
-                    UTex.Apply();
-                    VTex.LoadRawTextureData(vPlane);
-                    VTex.Apply();
+                        //Set property on UI thread
+                        //Debug.Log("ControlScript: OnPeerRawFrame " + width + " " + height + " " + posX + " " + posY + " " + posZ + " " + rotX + " " + rotY + " " + rotZ + " " + rotW);
 
-                    if (ToInit)
-                    {
-                        Matrix4x4 cam = Matrix4x4.identity;
-                        cam.SetTRS(new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW), Vector3.one);
-                        cam.m02 = -cam.m02;
-                        cam.m12 = -cam.m12;
-                        cam.m20 = -cam.m20;
-                        cam.m21 = -cam.m21;
-                        cam.m23 = -cam.m23;
-                        Stabilization.Instance.MainCamera = cam;
-                        Graphics.CopyTexture(YTex, MainTex);//calling this to update background
-                        mainCamera.transform.SetPositionAndRotation(cam.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(cam.GetColumn(2), cam.GetColumn(1)));
+                        if (LastPeerPoseLabel != null)
+                        {
+                            LastPeerPoseLabel.text = posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW;
+                        }
 
-                        JObject message = new JObject();
-                        message["posX"] = posX;
-                        message["posY"] = posY;
-                        message["posZ"] = posZ;
-                        message["rotX"] = rotX;
-                        message["rotY"] = rotY;
-                        message["rotZ"] = rotZ;
-                        message["rotW"] = rotW;
+                        Stabilization.Instance.Stablize(new Quaternion(rotX, rotY, rotZ, rotW), new Vector3(posX, posY, posZ));
+                        YTex.LoadRawTextureData(yPlane);
+                        YTex.Apply();
+                        UTex.LoadRawTextureData(uPlane);
+                        UTex.Apply();
+                        VTex.LoadRawTextureData(vPlane);
+                        VTex.Apply();
 
-                        JObject container = new JObject();
-                        container["message"] = message;
+                        //videoWriter.Write('F');
+                        //videoWriter.Write(rotX);
+                        //videoWriter.Write(rotY);
+                        //videoWriter.Write(rotZ);
+                        //videoWriter.Write(rotW);
+                        //videoWriter.Write(posX);
+                        //videoWriter.Write(posY);
+                        //videoWriter.Write(posZ);
+                        //videoWriter.Write(yPlane);
+                        //videoWriter.Write(uPlane);
+                        //videoWriter.Write(vPlane);
+
+                        if (ToInit)
+                        {
+                            //videoWriter.Write('I');
+                            //videoWriter.Write(Stabilization.Instance.Width);
+                            //videoWriter.Write(Stabilization.Instance.Height);
+                            //videoWriter.Write(Stabilization.Instance.Fx);
+                            //videoWriter.Write(Stabilization.Instance.Fy);
+                            //videoWriter.Write(Stabilization.Instance.Cx);
+                            //videoWriter.Write(Stabilization.Instance.Cy);
+                            Matrix4x4 m = Stabilization.Instance.PlanePose;
+                            //for (int i = 0; i < 16; ++i)
+                            //videoWriter.Write(m[i]);
+
+                            Matrix4x4 cam = Matrix4x4.identity;
+                            cam.SetTRS(new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW), Vector3.one);
+                            cam.m02 = -cam.m02;
+                            cam.m12 = -cam.m12;
+                            cam.m20 = -cam.m20;
+                            cam.m21 = -cam.m21;
+                            cam.m23 = -cam.m23;
+                            Stabilization.Instance.MainCamera = cam;
+                            Graphics.CopyTexture(YTex, MainTex);//calling this to update background
+                            mainCamera.transform.SetPositionAndRotation(cam.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(cam.GetColumn(2), cam.GetColumn(1)));
+
+                            JObject message = new JObject();
+                            message["posX"] = posX;
+                            message["posY"] = posY;
+                            message["posZ"] = posZ;
+                            message["rotX"] = rotX;
+                            message["rotY"] = rotY;
+                            message["rotZ"] = rotZ;
+                            message["rotW"] = rotW;
+
+                            JObject container = new JObject();
+                            container["message"] = message;
 #if !UNITY_EDITOR
-                        Conductor.Instance.SendMessage(Windows.Data.Json.JsonObject.Parse(container.ToString()));
+                            Conductor.Instance.SendMessage("star-trainee", Windows.Data.Json.JsonObject.Parse(container.ToString()));
 #endif
 
-                        ToInit = false;
-                    }
+                            ToInit = false;
+                        }
 
-                    g_SavePoseInfo = true;
+                        g_SavePoseInfo = true;
 
-                    if (Stabilization.Instance.g_UpdatePose == true)
-                    {
-                        //calling this to update background
-                        Graphics.CopyTexture(YTex, MainTex);
-                        Stabilization.Instance.g_UpdatePose = false;
-                    }
+                        if (Stabilization.Instance.g_UpdatePose == true)
+                        {
+                            //calling this to update background
+                            Graphics.CopyTexture(YTex, MainTex);
+                            Stabilization.Instance.g_UpdatePose = false;
+                        }
 
-                }, false);
-                //GetComponent<Renderer>().material.mainTexture = tex;
-                //Debug.Log(posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW);
+                    }, false);
+                    //GetComponent<Renderer>().material.mainTexture = tex;
+                    //Debug.Log(posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW);
 
-                //juan andres drone;
-                //var primaryPlaybackTexture2 = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
-                //Stabilization.Instance.SetTexture(primaryPlaybackTexture2);
-                //byte[] imagebytes = RemoteVideoImage.texture.GetRawTextureData();
-            }
-            else
-            {
-                if (g_SavePoseInfo)
+                    //juan andres drone;
+                    //var primaryPlaybackTexture2 = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
+                    //Stabilization.Instance.SetTexture(primaryPlaybackTexture2);
+                    //byte[] imagebytes = RemoteVideoImage.texture.GetRawTextureData();
+                }
+                else
                 {
-                    g_EventsScript.setPoseWhileAnnotating(posX, posY, posZ, rotX, rotY, rotZ, rotW);
-                    g_SavePoseInfo = false;
+                    if (g_SavePoseInfo)
+                    {
+                        g_EventsScript.setPoseWhileAnnotating(posX, posY, posZ, rotX, rotY, rotZ, rotW);
+                        g_SavePoseInfo = false;
+                    }
                 }
             }
+        }
+        else
+        {
+            UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+            {
+                //Set property on UI thread
+                //Debug.Log("ControlScript: OnSelfRawFrame " + width + " " + height + " " + posX + " " + posY + " " + posZ + " " + rotX + " " + rotY + " " + rotZ + " " + rotW);
+
+                if (LastSelfPoseLabel != null)
+                {
+                    LastSelfPoseLabel.text = posX + " " + posY + " " + posZ + "\n" + rotX + " " + rotY + " " + rotZ + " " + rotW;
+                }
+            }, false);
         }
     }
 
@@ -619,7 +786,7 @@ public class ControlScript : MonoBehaviour
         }, false);
     }
 
-    private void Conductor_IncomingRawMessage(string rawMessageString)
+    private void Conductor_IncomingRawMessage(string peerName, string rawMessageString)
     {
         if (Hololens == true)
         {
@@ -751,7 +918,7 @@ public class ControlScript : MonoBehaviour
 
                 Debug.Log("sending test message " + jsonString);
 #if !UNITY_EDITOR
-                Conductor.Instance.SendMessage(Windows.Data.Json.JsonObject.Parse(jsonString));
+                Conductor.Instance.SendMessage("star-trainee", Windows.Data.Json.JsonObject.Parse(jsonString));
 #endif
             }
             else
@@ -805,7 +972,7 @@ public class ControlScript : MonoBehaviour
             {
                 new Task(() =>
                 {
-                    var task = Conductor.Instance.DisconnectFromPeer();
+                    //var task = Conductor.Instance.DisconnectFromPeer(peerName);
                 }).Start();
                 status = Status.EndingCall;
             }
@@ -838,7 +1005,8 @@ public class ControlScript : MonoBehaviour
     {
         Conductor.Instance.CancelConnectingToPeer();
 
-        await Conductor.Instance.DisconnectFromPeer();
+        await Conductor.Instance.DisconnectFromPeer(StarTraineeName);
+        await Conductor.Instance.DisconnectFromPeer(StarTrainee2Name);
         await Conductor.Instance.DisconnectFromServer();
 
         Conductor.Instance.OnAppSuspending();
@@ -950,7 +1118,7 @@ public class ControlScript : MonoBehaviour
         Conductor.Instance.OnAddLocalStream += Conductor_OnAddLocalStream;
 
         // Connected to a peer event handler
-        Conductor.Instance.OnPeerConnectionCreated += () =>
+        Conductor.Instance.OnPeerConnectionCreated += (peerName) =>
         {
             var task = RunOnUiThread(() =>
             {
@@ -975,23 +1143,26 @@ public class ControlScript : MonoBehaviour
         };
 
         // Connection between the current user and a peer is closed event handler
-        Conductor.Instance.OnPeerConnectionClosed += () =>
+        Conductor.Instance.OnPeerConnectionClosed += (remotePeerName) =>
         {
+            var localId = SourceIDs[LocalName];
+            var remoteId = SourceIDs[remotePeerName];
+
             var task = RunOnUiThread(() =>
             {
                 lock (this)
                 {
                     if (status == Status.EndingCall)
                     {
-                        Plugin.UnloadLocalMediaStreamSource();
-                        Plugin.UnloadRemoteMediaStreamSource();
+                        Plugin.UnloadMediaStreamSource(localId);
+                        Plugin.UnloadMediaStreamSource(remoteId);
                         status = Status.Connected;
                         commandQueue.Add(new Command { type = CommandType.SetConnected });
                     }
                     else if (status == Status.InCall)
                     {
-                        Plugin.UnloadLocalMediaStreamSource();
-                        Plugin.UnloadRemoteMediaStreamSource();
+                        Plugin.UnloadMediaStreamSource(localId);
+                        Plugin.UnloadMediaStreamSource(remoteId);
                         status = Status.Connected;
                         commandQueue.Add(new Command { type = CommandType.SetConnected });
                     }
@@ -1067,8 +1238,10 @@ public class ControlScript : MonoBehaviour
 #endif
     }
 
-    private void Conductor_OnAddRemoteStream()
+    private void Conductor_OnAddRemoteStream(string remotePeerName)
     {
+        var remoteId = SourceIDs[remotePeerName];
+
 #if !UNITY_EDITOR
         var task = RunOnUiThread(() =>
         {
@@ -1078,19 +1251,19 @@ public class ControlScript : MonoBehaviour
                 {
                     IMediaSource source;
                     if (Conductor.Instance.VideoCodec.Name == "H264")
-                        source = Conductor.Instance.CreateRemoteMediaStreamSource("H264");
+                        source = Conductor.Instance.CreateRemoteMediaStreamSource(remotePeerName, "H264");
                     else
-                        source = Conductor.Instance.CreateRemoteMediaStreamSource("I420");
-                    Plugin.LoadRemoteMediaStreamSource((MediaStreamSource)source);
+                        source = Conductor.Instance.CreateRemoteMediaStreamSource(remotePeerName, "I420");
+                    Plugin.LoadMediaStreamSource(remoteId, (MediaStreamSource)source);
                 }
                 else if (status == Status.Connected)
                 {
                     IMediaSource source;
                     if (Conductor.Instance.VideoCodec.Name == "H264")
-                        source = Conductor.Instance.CreateRemoteMediaStreamSource("H264");
+                        source = Conductor.Instance.CreateRemoteMediaStreamSource(remotePeerName, "H264");
                     else
-                        source = Conductor.Instance.CreateRemoteMediaStreamSource("I420");
-                    Plugin.LoadRemoteMediaStreamSource((MediaStreamSource)source);
+                        source = Conductor.Instance.CreateRemoteMediaStreamSource(remotePeerName, "I420");
+                    Plugin.LoadMediaStreamSource(remoteId, (MediaStreamSource)source);
                 }
                 else
                 {
@@ -1101,7 +1274,7 @@ public class ControlScript : MonoBehaviour
 #endif
     }
 
-    private void Conductor_OnRemoveRemoteStream()
+    private void Conductor_OnRemoveRemoteStream(string peerName)
     {
 #if !UNITY_EDITOR
         var task = RunOnUiThread(() =>
@@ -1125,6 +1298,8 @@ public class ControlScript : MonoBehaviour
 
     private void Conductor_OnAddLocalStream()
     {
+        var localId = SourceIDs[LocalName];
+
 #if !UNITY_EDITOR
         var task = RunOnUiThread(() =>
         {
@@ -1133,7 +1308,7 @@ public class ControlScript : MonoBehaviour
                 if (status == Status.InCall)
                 {
                     var source = Conductor.Instance.CreateLocalMediaStreamSource("I420");
-                    Plugin.LoadLocalMediaStreamSource((MediaStreamSource)source);
+                    Plugin.LoadMediaStreamSource(localId, (MediaStreamSource)source);
 
                     Conductor.Instance.EnableLocalVideoStream();
                     Conductor.Instance.UnmuteMicrophone();
@@ -1141,7 +1316,7 @@ public class ControlScript : MonoBehaviour
                 else if (status == Status.Connected)
                 {
                     var source = Conductor.Instance.CreateLocalMediaStreamSource("I420");
-                    Plugin.LoadLocalMediaStreamSource((MediaStreamSource)source);
+                    Plugin.LoadMediaStreamSource(localId, (MediaStreamSource)source);
 
                     Conductor.Instance.EnableLocalVideoStream();
                     Conductor.Instance.UnmuteMicrophone();
@@ -1157,7 +1332,7 @@ public class ControlScript : MonoBehaviour
 
     private static class Plugin
     {
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "CreateLocalMediaPlayback")]
+        /*[DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "CreateLocalMediaPlayback")]
         internal static extern void CreateLocalMediaPlayback();
 
         [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "CreateRemoteMediaPlayback")]
@@ -1173,36 +1348,33 @@ public class ControlScript : MonoBehaviour
         internal static extern void GetLocalPrimaryTexture(UInt32 width, UInt32 height, out System.IntPtr playbackTexture);
 
         [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "GetRemotePrimaryTexture")]
-        internal static extern void GetRemotePrimaryTexture(UInt32 width, UInt32 height, out System.IntPtr playbackTexture);
+        internal static extern void GetRemotePrimaryTexture(UInt32 width, UInt32 height, out System.IntPtr playbackTexture);*/
+
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "CreateMediaPlayback")]
+        internal static extern void CreateMediaPlayback(UInt32 id);
+
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "ReleaseMediaPlayback")]
+        internal static extern void ReleaseMediaPlayback(UInt32 id);
+
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "GetPrimaryTexture")]
+        internal static extern void GetPrimaryTexture(UInt32 id, UInt32 width, UInt32 height, out System.IntPtr playbackTexture);
 
 
         [DllImport("HoloOpenCVHelper", CallingConvention = CallingConvention.StdCall, EntryPoint = "initChessPoseController")]
         internal static extern void initChessPoseController();
 
 #if !UNITY_EDITOR
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "LoadLocalMediaStreamSource")]
-        internal static extern void LoadLocalMediaStreamSource(MediaStreamSource IMediaSourceHandler);
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "LoadMediaStreamSource")]
+        internal static extern void LoadMediaStreamSource(UInt32 id, MediaStreamSource IMediaSourceHandler);
 
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "UnloadLocalMediaStreamSource")]
-        internal static extern void UnloadLocalMediaStreamSource();
-
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "LoadRemoteMediaStreamSource")]
-        internal static extern void LoadRemoteMediaStreamSource(MediaStreamSource IMediaSourceHandler);
-
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "UnloadRemoteMediaStreamSource")]
-        internal static extern void UnloadRemoteMediaStreamSource();
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "UnloadMediaStreamSource")]
+        internal static extern void UnloadMediaStreamSource(UInt32 id);
 #endif
 
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "LocalPlay")]
-        internal static extern void LocalPlay();
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "Play")]
+        internal static extern void Play(UInt32 id);
 
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "RemotePlay")]
-        internal static extern void RemotePlay();
-
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "LocalPause")]
-        internal static extern void LocalPause();
-
-        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "RemotePause")]
-        internal static extern void RemotePause();
+        [DllImport("MediaEngineUWP", CallingConvention = CallingConvention.StdCall, EntryPoint = "Pause")]
+        internal static extern void Pause(UInt32 id);
     }
 }

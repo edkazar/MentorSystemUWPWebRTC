@@ -22,6 +22,7 @@ public class ButtonClicking : MonoBehaviour
     public bool g_LineButtonClicked { get; set; }
     public bool g_PointsButtonClicked { get; set; }
     public bool g_PanelButtonClicked { get; set; }
+    public bool g_ShowUltrasoundButtonClicked { get; set; }
 
     private GameObject g_TempPressedObject;
 
@@ -82,6 +83,14 @@ public class ButtonClicking : MonoBehaviour
         if (g_EventManager.g_UserInterface.activeSelf)
         {
             g_InitCameraButtonClicked = true;
+        }
+    }
+
+    public void onClickShowUltrasoundButton()
+    {
+        if (g_EventManager.g_UserInterface.activeSelf)
+        {
+            g_ShowUltrasoundButtonClicked = true;
         }
     }
 

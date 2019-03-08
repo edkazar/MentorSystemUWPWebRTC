@@ -14,6 +14,14 @@ public class Stabilization : Singleton<Stabilization>
     public Texture2D UTex { set { Material.SetTexture("_UTex", value); } }
     public Texture2D VTex { set { Material.SetTexture("_VTex", value); } }
 
+    public Matrix4x4 PlanePose { get { return Plane.transform.localToWorldMatrix; } }
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+    public float Fx { get; private set; }
+    public float Fy { get; private set; }
+    public float Cx { get; private set; }
+    public float Cy { get; private set; }
+
     private Matrix4x4 CurrentPose;
     public bool g_UpdatePose { get; set; }
 
@@ -25,12 +33,12 @@ public class Stabilization : Singleton<Stabilization>
 
     public void InitCamera(int width, int height, float fx, float fy, float cx, float cy)
     {
-        Material.SetInt("width", width);
-        Material.SetInt("height", height);
-        Material.SetFloat("fx", fx);
-        Material.SetFloat("fy", fy);
-        Material.SetFloat("cx", cx);
-        Material.SetFloat("cy", cy);
+        Material.SetInt("width", Width = width);
+        Material.SetInt("height", Height = height);
+        Material.SetFloat("fx", Fx = fx);
+        Material.SetFloat("fy", Fy = fy);
+        Material.SetFloat("cx", Cx = cx);
+        Material.SetFloat("cy", Cy = cy);
     }
 
     public void InitPlane(Matrix4x4 m)

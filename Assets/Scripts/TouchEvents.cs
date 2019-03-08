@@ -27,6 +27,7 @@ public class TouchEvents : MonoBehaviour
     public Transform g_SelectedElementTransform { get; set; }
     public bool isUserIconAnnotating { get; set; }
     public bool isUserLineAnnotating { get; set; }
+    public bool UltrasoundButtonClicked { get; set; }
 
     private List<float> g_PoseParameters;
 
@@ -44,6 +45,12 @@ public class TouchEvents : MonoBehaviour
         {
             g_JsonManager.createReInitCamera();
             g_ButtonManager.g_InitCameraButtonClicked = false;
+        }
+
+        if (g_ButtonManager.g_ShowUltrasoundButtonClicked)
+        {
+            UltrasoundButtonClicked = true;
+            g_ButtonManager.g_ShowUltrasoundButtonClicked = false;
         }
 
         try

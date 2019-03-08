@@ -4,7 +4,7 @@
 		LOD 200
 
 		CGPROGRAM
-		#pragma surface surf Lambert
+		#pragma surface surf SimpleLambert
 		#pragma target 3.0
 
 		sampler2D _MainTex;
@@ -37,20 +37,31 @@
 			if (proj(camera, IN.worldPos, p)) {
 				half2 t = half2(p.x, 1.0 - p.y);
 				half y = tex2D(_YTex, t).a;
-				half u = tex2D(_UTex, t).a;
-				half v = tex2D(_VTex, t).a;
-				half r = 1.164 * (y - 0.0625) + 0.000 * (u - 0.5) + 1.596 * (v - 0.5);
-				half g = 1.164 * (y - 0.0625) - 0.392 * (u - 0.5) - 0.813 * (v - 0.5);
-				half b = 1.164 * (y - 0.0625) + 2.017 * (u - 0.5) + 0.000 * (v - 0.5);
-				o.Albedo = half3(b, g, r);
-			} else if (proj(mainCamera, IN.worldPos, p)) {
+				half v = tex2D(_UTex, t).a;
+				half u = tex2D(_VTex, t).a;
+                //half r = y + 0.00000 * (u - 0.5) + 1.13983 * (v - 0.5);
+                //half g = y - 0.39465 * (u - 0.5) - 0.58060 * (v - 0.5);
+                //half b = y + 2.03211 * (u - 0.5) + 0.00000 * (v - 0.5);
+                half r = y + 0.000 * (u - 0.5) + 1.596 * (v - 0.5);
+                half g = y - 0.392 * (u - 0.5) - 0.813 * (v - 0.5);
+                half b = y + 2.017 * (u - 0.5) + 0.000 * (v - 0.5);
+				o.Albedo = half3(r, g, b);
+			}/* else if (proj(mainCamera, IN.worldPos, p)) {
 				half a = tex2D(_MainTex, half2(p.x, 1.0 - p.y)).a;
 				o.Albedo = half3(a, a, a);
-			} else {
-				o.Albedo = half3(1.0, 1.0, 1.0);
+			}*/ else {
+				//o.Albedo = half3(1.0, 1.0, 1.0);
+                o.Albedo = half3(0.0, 0.0, 0.0);
 			}
 			o.Alpha = 1.0;
 		}
+        
+        half4 LightingSimpleLambert(SurfaceOutput s, half3 lightDir, half atten) {
+            half4 c;
+            c.rgb = s.Albedo;
+            c.a = s.Alpha;
+            return c;
+        }
 
 		ENDCG
 	}
