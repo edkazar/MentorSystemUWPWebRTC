@@ -28,6 +28,7 @@ public class TouchEvents : MonoBehaviour
     public bool isUserIconAnnotating { get; set; }
     public bool isUserLineAnnotating { get; set; }
     public bool UltrasoundButtonClicked { get; set; }
+    public bool isPartnerConnected { get; set; }
 
     private List<float> g_PoseParameters;
 
@@ -253,7 +254,8 @@ public class TouchEvents : MonoBehaviour
                 annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
                 annotation_information.Add(g_SelectedElementTransform.localScale.x);
 
-                g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
+                if(isPartnerConnected)
+                    g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
             }
         }
     }
@@ -319,7 +321,8 @@ public class TouchEvents : MonoBehaviour
         annotation_information.Add(g_SelectedElementTransform.localEulerAngles.z);
         annotation_information.Add(g_SelectedElementTransform.localScale.x);
 
-        g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
+        if (isPartnerConnected)
+            g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "UpdateAnnotationCommand", null, g_SelectedElementTransform.gameObject.GetComponent<Image>().sprite.name, annotation_information, g_PoseParameters);
 
         isUserIconAnnotating = false;
     }
@@ -368,7 +371,8 @@ public class TouchEvents : MonoBehaviour
             {
                 g_CurrentLine.Add(touchedPoint3D);
                 drawLine();
-                g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
+                if (isPartnerConnected)
+                    g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
                 g_AnnotationCounter++;
             }
             // The touch was done to create a point annotation. Create the point and draw it
@@ -377,7 +381,8 @@ public class TouchEvents : MonoBehaviour
                 resetLineAnnotation();
                 createPointAnnotation(touchedPoint3D);
                 drawLine();
-                g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
+                if (isPartnerConnected)
+                    g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", g_CurrentLine, null, null, g_PoseParameters);
                 g_AnnotationCounter++;
             }
         }
@@ -453,7 +458,8 @@ public class TouchEvents : MonoBehaviour
     {
         if(g_SelectedElementTransform != null)
         {
-            g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
+            if (isPartnerConnected)
+                g_JsonManager.createJSONable(int.Parse(g_SelectedElementTransform.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
 
             Destroy(g_SelectedElementTransform.gameObject);
         }
@@ -468,7 +474,9 @@ public class TouchEvents : MonoBehaviour
         {
             if (child.name != currentName)
             {
-                g_JsonManager.createJSONable(int.Parse(child.gameObject.name), "DeleteAnnotationCommand", null, null, null, null);
+                if (isPartnerConnected)
+                    g_JsonManager.createJSONable(int.Parse(child.gameObject.name), "DeleteAnnotationCommand", null, null, null, null);
+
                 currentName = child.name;
             }
             Destroy(child.gameObject);
@@ -476,7 +484,9 @@ public class TouchEvents : MonoBehaviour
 
         foreach (Transform child in g_IconAnnotationsContainer.transform)
         {
-            g_JsonManager.createJSONable(int.Parse(child.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
+            if (isPartnerConnected)
+                g_JsonManager.createJSONable(int.Parse(child.gameObject.GetComponent<Image>().name), "DeleteAnnotationCommand", null, null, null, null);
+
             Destroy(child.gameObject);
         }
 
@@ -497,6 +507,7 @@ public class TouchEvents : MonoBehaviour
     {
         isUserIconAnnotating = false;
         isUserLineAnnotating = false;
+        isPartnerConnected = false;
 
         if (g_LineAnnotationMaterial == null)
         {
@@ -631,7 +642,9 @@ public class TouchEvents : MonoBehaviour
         annotation_information.Add(NewImageContainer.transform.localEulerAngles.z);
         annotation_information.Add(NewImageContainer.transform.localScale.x);
 
-        g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", null, p_ImageName, annotation_information, g_PoseParameters);
+        if (isPartnerConnected)
+            g_JsonManager.createJSONable(g_AnnotationCounter, "CreateAnnotationCommand", null, p_ImageName, annotation_information, g_PoseParameters);
+
         g_AnnotationCounter++;
     }
 }

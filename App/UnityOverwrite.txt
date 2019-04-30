@@ -5,13 +5,13 @@
 # Write a line equal to 'overwrite-all' (without quotes) to overwrite everything (preserved accross builds)
 # Write a line equal to 'keep-all' (without quotes) to keep files regardless their modification (preserved accross builds)
 # Default behavior is to never overwrite files
-MentorSystemWebRTC.sln: CAE36F445C5264EE6230974314CAD9D6
-MentorSystemWebRTC\App.cs: 4DEBB485FA63D7B2886DBA2ADB5D8187
-MentorSystemWebRTC\AssemblyConverterArgs.txt: E0A149C12EEB4310E6691C61A9316E09
-MentorSystemWebRTC\MentorSystemWebRTC.csproj: 60296B0A3DE8D6355E725A59E563961F
+MentorSystemWebRTC.sln: 21188616957DE247FCFB73869EFBFDFF
+MentorSystemWebRTC\App.cs: 41B8F153CCBB42447DAFEBCB75D2E8FB
+MentorSystemWebRTC\AssemblyConverterArgs.txt: 47847ADE851B7F5937EDF142CECDDD5B
+MentorSystemWebRTC\MentorSystemWebRTC.csproj: E98BA9778D3125669FA39786C5EC2B27
 MentorSystemWebRTC\MentorSystemWebRTC.csproj.user: modified
 MentorSystemWebRTC\Package.appxmanifest: modified
-MentorSystemWebRTC\project.json: 1D02BC64BAC0D041019673A1C4C51737
+MentorSystemWebRTC\project.json: 6F9D62D8351719C272AB5DF2AEC2A666
 MentorSystemWebRTC\Assets\SplashScreen.scale-200.png: A85C1D7624B6902CF8CEBD6F0200A826
 MentorSystemWebRTC\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
 MentorSystemWebRTC\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE

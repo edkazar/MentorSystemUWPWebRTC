@@ -36,7 +36,7 @@ public class ControlScript : MonoBehaviour
     // - this client will not be able to initiate a call to a peer (it will accept incoming calls)
     // - this client will not offer its own media
     // i.e.: the trainee should have LocalStreamEnabled = true, and the mentor should have LocalStreamEnabled = false
-    public bool LocalStreamEnabled = false;
+    public bool LocalStreamEnabled = true;
 
     public string PreferredVideoCodec = "VP8"; // options are "VP8" and "H264". Currently (as of 5/28/2018) we only support HoloLens pose on VP8.
 
@@ -61,11 +61,12 @@ public class ControlScript : MonoBehaviour
     public RawImage RemoteVideoImage_StarTrainee2;
     private const string StarTrainee2Name = "star-trainee2";
 
+    public string RemoteNameForOfferingLocalStream = StarTraineeName;
 
     private const string LocalName = StarMentorName; // change for trainee
 
     public Dictionary<string, uint> SourceIDs = new Dictionary<string, uint> { { StarMentorName, 0 }, { StarTraineeName, 1 }, { StarTrainee2Name, 2 } };
-
+    
     public InputField ServerAddressInputField;
     public InputField ServerPortInputField;
     public InputField ClientNameInputField;
@@ -83,13 +84,17 @@ public class ControlScript : MonoBehaviour
     public Text LastPeerPoseLabel;
     public Text LastSelfPoseLabel;
 
-    private int MainTextureWidth = 1344;
-    private int MainTextureHeight = 756;
+    private int MainTextureWidth = 896;
+    private int MainTextureHeight = 504;
     private Texture2D MainTex, YTex, UTex, VTex;
 
     private byte[] g_plane;
 
     public GameObject TextItemPrefab;
+    /*public GameObject VitalSignPrefab;
+    GameObject VitalSignsContainer;
+    VitalSign HR;
+    VitalSign SpO2;*/
 
     private bool g_SavePoseInfo;
 
@@ -218,8 +223,30 @@ public class ControlScript : MonoBehaviour
             }
         }
 
+        /*if (VitalSignsContainer == null)
+        {
+            VitalSignsContainer = GameObject.Find("VitalSignsContainer");
+            if (VitalSignsContainer == null)
+            {
+                Debug.LogError("Could not load VitalSignsContainer");
+            }
+        }  */
+
         if (Hololens == true)
             Stabilization.Instance.SetPlane(StabilizedQuad);
+
+        /*if (VitalSignPrefab == null)
+        {
+            VitalSignPrefab = Resources.Load<GameObject>("VitalSign/VitalSign");
+            HR = Instantiate(VitalSignPrefab, VitalSignsContainer.transform).GetComponent<VitalSign>();
+            HR.Init(new Vector3(0.1f, 0.135f, 0f), Color.green, "HR", "160", "75");
+            SpO2 = Instantiate(VitalSignPrefab, VitalSignsContainer.transform).GetComponent<VitalSign>();
+            SpO2.Init(new Vector3(0.1f, 0.385f, 0f), Color.cyan, "SpO2", "100", "90");
+            if (VitalSignPrefab == null)
+            {
+                Debug.LogError("Could not load VitalSignPrefab");
+            }
+        }*/
 
 #if !UNITY_EDITOR
         if (LocalStreamEnabled) {
@@ -227,8 +254,10 @@ public class ControlScript : MonoBehaviour
         } else {
             Debug.Log("because this is the MENTOR app, we disable the local stream so we are not sending any video back to the trainee.");
         }
+        Debug.Log("Setting LocalStreamEnabled to " + LocalStreamEnabled);
 
         Conductor.Instance.LocalStreamEnabled = LocalStreamEnabled;
+        Conductor.Instance.RemoteNameForOfferingLocalStream = RemoteNameForOfferingLocalStream;
 #endif
 
 #if !UNITY_EDITOR
@@ -318,7 +347,7 @@ public class ControlScript : MonoBehaviour
             {
                 LocalVideoImage.texture = primaryPlaybackTexture;
             }*/
-            InitMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor, LocalTextureWidth, LocalTextureHeight, false);
+            //InitMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor, LocalTextureWidth, LocalTextureHeight, false);
         }
 
         //if (RemoteVideoImage != null)
@@ -326,29 +355,30 @@ public class ControlScript : MonoBehaviour
             InitMediaTexture(SourceIDs[StarTraineeName], RemoteVideoImage_StarTrainee, RemoteTextureWidth, RemoteTextureHeight, true);
             InitMediaTexture(SourceIDs[StarTrainee2Name], RemoteVideoImage_StarTrainee2, RemoteTextureWidth, RemoteTextureHeight, false);
 
-            /*Plugin.CreateRemoteMediaPlayback();
-            IntPtr nativeTex = IntPtr.Zero;
-            Plugin.GetRemotePrimaryTexture(RemoteTextureWidth, RemoteTextureHeight, out nativeTex);
-            primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
-            RemoteVideoImage.texture = primaryPlaybackTexture;
+        /*Plugin.CreateRemoteMediaPlayback();
+        IntPtr nativeTex = IntPtr.Zero;
+        Plugin.GetRemotePrimaryTexture(RemoteTextureWidth, RemoteTextureHeight, out nativeTex);
+        primaryPlaybackTexture = Texture2D.CreateExternalTexture((int)RemoteTextureWidth, (int)RemoteTextureHeight, TextureFormat.BGRA32, false, false, nativeTex);
+        RemoteVideoImage.texture = primaryPlaybackTexture;
 
-            MainTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
-            YTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
-            UTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
-            VTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
-            if (Hololens == true)
-            {
-                RemoteVideoImage.transform.gameObject.SetActive(false);
-        
-                Stabilization.Instance.MainTex = MainTex;          
-                Stabilization.Instance.YTex = YTex;                
-                Stabilization.Instance.UTex = UTex;               
-                Stabilization.Instance.VTex = VTex;
-            }*/
-            //juan andres drone
-            //byte[] imagebytes = primaryPlaybackTexture.GetRawTextureData();
+        MainTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+        YTex = new Texture2D(MainTextureWidth, MainTextureHeight, TextureFormat.Alpha8, false);
+        UTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+        VTex = new Texture2D(MainTextureWidth / 2, MainTextureHeight / 2, TextureFormat.Alpha8, false);
+        if (Hololens == true)
+        {
+            RemoteVideoImage.transform.gameObject.SetActive(false);
+
+            Stabilization.Instance.MainTex = MainTex;          
+            Stabilization.Instance.YTex = YTex;                
+            Stabilization.Instance.UTex = UTex;               
+            Stabilization.Instance.VTex = VTex;
+        }*/
+        //juan andres drone
+        //byte[] imagebytes = primaryPlaybackTexture.GetRawTextureData();
 
         //}
+        
     }
 
     private void TeardownMediaTexture(uint id, RawImage videoImage)
@@ -364,11 +394,13 @@ public class ControlScript : MonoBehaviour
     {
         if (LocalStreamEnabled)
         {
-            TeardownMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor);
+            //TeardownMediaTexture(SourceIDs[StarMentorName], LocalVideoImage_StarMentor);
         }
 
         TeardownMediaTexture(SourceIDs[StarTraineeName], RemoteVideoImage_StarTrainee);
         TeardownMediaTexture(SourceIDs[StarTrainee2Name], RemoteVideoImage_StarTrainee2);
+
+        //g_EventsScript.isPartnerConnected = false;
     }
 
 
@@ -400,6 +432,7 @@ public class ControlScript : MonoBehaviour
                 selectedPeerIndex = PeerContent.transform.childCount - 1;
             }
         }
+        g_EventsScript.isPartnerConnected = true;
     }
 
     private void RemoveRemotePeer(string peerName)
@@ -441,6 +474,7 @@ public class ControlScript : MonoBehaviour
                 }
             }
         }
+        g_EventsScript.isPartnerConnected = false;
     }
 
     /*
@@ -596,7 +630,7 @@ public class ControlScript : MonoBehaviour
                         {
                             ConnectButton.GetComponentInChildren<Text>().text = "Connect";
                             CallButton.GetComponentInChildren<Text>().text = "Call";
-                            //videoWriter.Dispose();
+                            videoWriter.Dispose();
                             VideoFile.Dispose();
                         }
                         break;
@@ -607,7 +641,8 @@ public class ControlScript : MonoBehaviour
                             CallButton.GetComponentInChildren<Text>().text = "Call";
                             String fileToWrite = Path.Combine(Application.persistentDataPath, DateTime.Now.ToString("yyMMdd_HHmmss") + ".raw");
                             VideoFile = File.Create(fileToWrite);
-                            //videoWriter = new BinaryWriter(VideoFile);
+                            videoWriter = new BinaryWriter(VideoFile);
+                            Debug.Log(Application.persistentDataPath);
                         }
                         break;
                     case Status.InCall:
@@ -637,6 +672,7 @@ public class ControlScript : MonoBehaviour
 
     int counter = 0;
     bool ToInit = false;
+    //System.Random rnd = new System.Random();
 
     // fired whenever we get a video frame from the remote peer.
     // if there is pose data, posXYZ and rotXYZW will have non-zero values.
@@ -644,12 +680,16 @@ public class ControlScript : MonoBehaviour
             byte[] yPlane, uint yPitch, byte[] vPlane, uint vPitch, byte[] uPlane, uint uPitch,
             float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float rotW)
     {
-        if (peerName != StarTrainee2Name)
+        if (peerName == StarTraineeName)
         {
             g_plane = yPlane;
             if (Hololens == true)
             {
-                //Debug.LogError("Hololensyy");
+                //just for testing
+                //int n1 = rnd.Next(1,99);
+                //HR.Value = n1.ToString();
+                //int n2 = rnd.Next(1,99);
+                //SpO2.Value = n2.ToString();
 
                 if (g_EventsScript.isUserIconAnnotating == false && g_EventsScript.isUserLineAnnotating == false)
                 {
@@ -671,30 +711,30 @@ public class ControlScript : MonoBehaviour
                         VTex.LoadRawTextureData(vPlane);
                         VTex.Apply();
 
-                        //videoWriter.Write('F');
-                        //videoWriter.Write(rotX);
-                        //videoWriter.Write(rotY);
-                        //videoWriter.Write(rotZ);
-                        //videoWriter.Write(rotW);
-                        //videoWriter.Write(posX);
-                        //videoWriter.Write(posY);
-                        //videoWriter.Write(posZ);
-                        //videoWriter.Write(yPlane);
-                        //videoWriter.Write(uPlane);
-                        //videoWriter.Write(vPlane);
+                        videoWriter.Write('F');
+                        videoWriter.Write(rotX);
+                        videoWriter.Write(rotY);
+                        videoWriter.Write(rotZ);
+                        videoWriter.Write(rotW);
+                        videoWriter.Write(posX);
+                        videoWriter.Write(posY);
+                        videoWriter.Write(posZ);
+                        videoWriter.Write(yPlane);
+                        videoWriter.Write(uPlane);
+                        videoWriter.Write(vPlane);
 
                         if (ToInit)
                         {
-                            //videoWriter.Write('I');
-                            //videoWriter.Write(Stabilization.Instance.Width);
-                            //videoWriter.Write(Stabilization.Instance.Height);
-                            //videoWriter.Write(Stabilization.Instance.Fx);
-                            //videoWriter.Write(Stabilization.Instance.Fy);
-                            //videoWriter.Write(Stabilization.Instance.Cx);
-                            //videoWriter.Write(Stabilization.Instance.Cy);
+                            videoWriter.Write('I');
+                            videoWriter.Write(Stabilization.Instance.Width);
+                            videoWriter.Write(Stabilization.Instance.Height);
+                            videoWriter.Write(Stabilization.Instance.Fx);
+                            videoWriter.Write(Stabilization.Instance.Fy);
+                            videoWriter.Write(Stabilization.Instance.Cx);
+                            videoWriter.Write(Stabilization.Instance.Cy);
                             Matrix4x4 m = Stabilization.Instance.PlanePose;
-                            //for (int i = 0; i < 16; ++i)
-                            //videoWriter.Write(m[i]);
+                            for (int i = 0; i < 16; ++i)
+                            videoWriter.Write(m[i]);
 
                             Matrix4x4 cam = Matrix4x4.identity;
                             cam.SetTRS(new Vector3(posX, posY, posZ), new Quaternion(rotX, rotY, rotZ, rotW), Vector3.one);
@@ -790,58 +830,72 @@ public class ControlScript : MonoBehaviour
     {
         if (Hololens == true)
         {
-            JObject message = JObject.Parse(rawMessageString);
-            if ((string)message["type"] == "I")
+            try
             {
-                int CameraWidth = Convert.ToInt32((string)message["camera"]["width"]);
-                int CameraHeight = Convert.ToInt32((string)message["camera"]["height"]);
-                float Camerafx = Convert.ToSingle((string)message["camera"]["fx"]);
-                float Camerafy = Convert.ToSingle((string)message["camera"]["fy"]);
-                float Cameracx = Convert.ToSingle((string)message["camera"]["cx"]);
-                float Cameracy = Convert.ToSingle((string)message["camera"]["cy"]);
 
-                JArray jsonarray = (JArray)message["plane"];
-
-                Vector4 col1 = new Vector4(Convert.ToSingle((string)jsonarray[0]), Convert.ToSingle((string)jsonarray[4]), Convert.ToSingle((string)jsonarray[8]), Convert.ToSingle((string)jsonarray[12]));
-                Vector4 col2 = new Vector4(Convert.ToSingle((string)jsonarray[1]), Convert.ToSingle((string)jsonarray[5]), Convert.ToSingle((string)jsonarray[9]), Convert.ToSingle((string)jsonarray[13]));
-                Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
-                Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
-                Matrix4x4 planePoints = new Matrix4x4(col1, col2, col3, col4);
-
-                JArray jsonarray2 = (JArray)message["cameraMatrix"];
-
-                Vector4 orgcol1 = new Vector4(Convert.ToSingle((string)jsonarray2[0]), Convert.ToSingle((string)jsonarray2[4]), Convert.ToSingle((string)jsonarray2[8]), Convert.ToSingle((string)jsonarray2[12]));
-                Vector4 orgcol2 = new Vector4(Convert.ToSingle((string)jsonarray2[1]), Convert.ToSingle((string)jsonarray2[5]), Convert.ToSingle((string)jsonarray2[9]), Convert.ToSingle((string)jsonarray2[13]));
-                Vector4 orgcol3 = new Vector4(Convert.ToSingle((string)jsonarray2[2]), Convert.ToSingle((string)jsonarray2[6]), Convert.ToSingle((string)jsonarray2[10]), Convert.ToSingle((string)jsonarray2[14]));
-                Vector4 orgcol4 = new Vector4(Convert.ToSingle((string)jsonarray2[3]), Convert.ToSingle((string)jsonarray2[7]), Convert.ToSingle((string)jsonarray2[11]), Convert.ToSingle((string)jsonarray2[15]));
-                Matrix4x4 planePoints2 = new Matrix4x4(orgcol1, orgcol2, orgcol3, orgcol4);
-
-                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                JObject message = JObject.Parse(rawMessageString);
+                if ((string)message["type"] == "I")
                 {
-                    Stabilization.Instance.InitCamera(CameraWidth, CameraHeight, Camerafx, Camerafy, Cameracx, Cameracy);
-                    Stabilization.Instance.InitPlane(planePoints);
-                    ToInit = true;
-                    //Stabilization.Instance.MainCamera = planePoints2;
-                    //Graphics.CopyTexture(YTex, MainTex);//calling this to update gackground
-                    //mainCamera.transform.SetPositionAndRotation(planePoints2.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(planePoints2.GetColumn(2), planePoints2.GetColumn(1)));
-                }, false);
+                    int CameraWidth = Convert.ToInt32((string)message["camera"]["width"]);
+                    int CameraHeight = Convert.ToInt32((string)message["camera"]["height"]);
+                    float Camerafx = Convert.ToSingle((string)message["camera"]["fx"]);
+                    float Camerafy = Convert.ToSingle((string)message["camera"]["fy"]);
+                    float Cameracx = Convert.ToSingle((string)message["camera"]["cx"]);
+                    float Cameracy = Convert.ToSingle((string)message["camera"]["cy"]);
 
-                //Debug.Log(CameraWidth + " " + CameraHeight + " " + Camerafx + " " + Camerafy + " " + Cameracx + " " + Cameracy);
+                    JArray jsonarray = (JArray)message["plane"];
+
+                    Vector4 col1 = new Vector4(Convert.ToSingle((string)jsonarray[0]), Convert.ToSingle((string)jsonarray[4]), Convert.ToSingle((string)jsonarray[8]), Convert.ToSingle((string)jsonarray[12]));
+                    Vector4 col2 = new Vector4(Convert.ToSingle((string)jsonarray[1]), Convert.ToSingle((string)jsonarray[5]), Convert.ToSingle((string)jsonarray[9]), Convert.ToSingle((string)jsonarray[13]));
+                    Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
+                    Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
+                    Matrix4x4 planePoints = new Matrix4x4(col1, col2, col3, col4);
+
+                    JArray jsonarray2 = (JArray)message["cameraMatrix"];
+
+                    Vector4 orgcol1 = new Vector4(Convert.ToSingle((string)jsonarray2[0]), Convert.ToSingle((string)jsonarray2[4]), Convert.ToSingle((string)jsonarray2[8]), Convert.ToSingle((string)jsonarray2[12]));
+                    Vector4 orgcol2 = new Vector4(Convert.ToSingle((string)jsonarray2[1]), Convert.ToSingle((string)jsonarray2[5]), Convert.ToSingle((string)jsonarray2[9]), Convert.ToSingle((string)jsonarray2[13]));
+                    Vector4 orgcol3 = new Vector4(Convert.ToSingle((string)jsonarray2[2]), Convert.ToSingle((string)jsonarray2[6]), Convert.ToSingle((string)jsonarray2[10]), Convert.ToSingle((string)jsonarray2[14]));
+                    Vector4 orgcol4 = new Vector4(Convert.ToSingle((string)jsonarray2[3]), Convert.ToSingle((string)jsonarray2[7]), Convert.ToSingle((string)jsonarray2[11]), Convert.ToSingle((string)jsonarray2[15]));
+                    Matrix4x4 planePoints2 = new Matrix4x4(orgcol1, orgcol2, orgcol3, orgcol4);
+
+                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    {
+                        Stabilization.Instance.InitCamera(CameraWidth, CameraHeight, Camerafx, Camerafy, Cameracx, Cameracy);
+                        Stabilization.Instance.InitPlane(planePoints);
+                        ToInit = true;
+                        //Stabilization.Instance.MainCamera = planePoints2;
+                        //Graphics.CopyTexture(YTex, MainTex);//calling this to update gackground
+                        //mainCamera.transform.SetPositionAndRotation(planePoints2.MultiplyPoint(Vector3.zero), Quaternion.LookRotation(planePoints2.GetColumn(2), planePoints2.GetColumn(1)));
+                    }, false);
+
+                    //Debug.Log(CameraWidth + " " + CameraHeight + " " + Camerafx + " " + Camerafy + " " + Cameracx + " " + Cameracy);
+                }
+                else if ((string)message["type"] == "O")
+                {
+                    Debug.Log("test");
+                    //HR.Value = (string)message["HR"];
+                    //SpO2.Value = (string)message["SpO2"];
+                }
+                else
+                {
+                    JArray jsonarray = (JArray)message["cameraMatrix"];
+                    Vector4 col1 = new Vector4(Convert.ToSingle((string)jsonarray[0]), Convert.ToSingle((string)jsonarray[4]), Convert.ToSingle((string)jsonarray[8]), Convert.ToSingle((string)jsonarray[12]));
+                    Vector4 col2 = new Vector4(Convert.ToSingle((string)jsonarray[1]), Convert.ToSingle((string)jsonarray[5]), Convert.ToSingle((string)jsonarray[9]), Convert.ToSingle((string)jsonarray[13]));
+                    Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
+                    Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
+                    Matrix4x4 pose = new Matrix4x4(col1, col2, col3, col4);
+                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    {
+                        Stabilization.Instance.Stablize(pose);
+                    }, false);
+
+                    //Debug.Log(pose.ToString());
+                }
             }
-            else
+            catch (Exception e)
             {
-                JArray jsonarray = (JArray)message["cameraMatrix"];
-                Vector4 col1 = new Vector4(Convert.ToSingle((string)jsonarray[0]), Convert.ToSingle((string)jsonarray[4]), Convert.ToSingle((string)jsonarray[8]), Convert.ToSingle((string)jsonarray[12]));
-                Vector4 col2 = new Vector4(Convert.ToSingle((string)jsonarray[1]), Convert.ToSingle((string)jsonarray[5]), Convert.ToSingle((string)jsonarray[9]), Convert.ToSingle((string)jsonarray[13]));
-                Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
-                Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
-                Matrix4x4 pose = new Matrix4x4(col1, col2, col3, col4);
-                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
-                {
-                    Stabilization.Instance.Stablize(pose);
-                }, false);
-
-                //Debug.Log(pose.ToString());
+                Debug.Log(e.GetType().ToString());
             }
         }
     }

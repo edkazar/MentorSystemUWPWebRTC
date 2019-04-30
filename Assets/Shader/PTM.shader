@@ -46,11 +46,11 @@
                 half g = y - 0.392 * (u - 0.5) - 0.813 * (v - 0.5);
                 half b = y + 2.017 * (u - 0.5) + 0.000 * (v - 0.5);
 				o.Albedo = half3(r, g, b);
-			}/* else if (proj(mainCamera, IN.worldPos, p)) {
+			} else if (proj(mainCamera, IN.worldPos, p)) {
 				half a = tex2D(_MainTex, half2(p.x, 1.0 - p.y)).a;
 				o.Albedo = half3(a, a, a);
-			}*/ else {
-				//o.Albedo = half3(1.0, 1.0, 1.0);
+			} else {
+				o.Albedo = half3(1.0, 1.0, 1.0);
                 o.Albedo = half3(0.0, 0.0, 0.0);
 			}
 			o.Alpha = 1.0;
