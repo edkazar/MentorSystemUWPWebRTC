@@ -17,9 +17,6 @@ namespace MentorSystemWebRTC
         {
             SetupOrientation();
             m_AppCallbacks = new AppCallbacks();
-
-            // Allow clients of this class to append their own callbacks.
-            AddAppCallbacks(m_AppCallbacks);
         }
 
         public virtual void Initialize(CoreApplicationView applicationView)
@@ -32,14 +29,6 @@ namespace MentorSystemWebRTC
             m_AppCallbacks.SetBridge(m_Bridge);
 
             m_AppCallbacks.SetCoreApplicationViewEvents(applicationView);
-        }
-
-        /// <summary>
-        /// This is where apps can hook up any additional setup they need to do before Unity intializes.
-        /// </summary>
-        /// <param name="appCallbacks"></param>
-        virtual protected void AddAppCallbacks(AppCallbacks appCallbacks)
-        {
         }
 
         private void CoreApplication_Suspending(object sender, SuspendingEventArgs e)

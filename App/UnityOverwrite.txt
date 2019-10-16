@@ -10,7 +10,7 @@ MentorSystemWebRTC\App.cs: 41B8F153CCBB42447DAFEBCB75D2E8FB
 MentorSystemWebRTC\AssemblyConverterArgs.txt: 47847ADE851B7F5937EDF142CECDDD5B
 MentorSystemWebRTC\MentorSystemWebRTC.csproj: E98BA9778D3125669FA39786C5EC2B27
 MentorSystemWebRTC\MentorSystemWebRTC.csproj.user: modified
-MentorSystemWebRTC\Package.appxmanifest: modified
+MentorSystemWebRTC\Package.appxmanifest: A42665AC91E88F07E1556AAB4095BBB7
 MentorSystemWebRTC\project.json: 6F9D62D8351719C272AB5DF2AEC2A666
 MentorSystemWebRTC\Assets\SplashScreen.scale-200.png: A85C1D7624B6902CF8CEBD6F0200A826
 MentorSystemWebRTC\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
@@ -19,14 +19,6 @@ MentorSystemWebRTC\Assets\Square44x44Logo.targetsize-24.png: 156637F7B5363E983E7
 MentorSystemWebRTC\Assets\Square44x44Logo.targetsize-24_altform-unplated.png: 156637F7B5363E983E7A46D8E533A23D
 MentorSystemWebRTC\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
 MentorSystemWebRTC\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\SplashScreen.scale-200.png: A85C1D7624B6902CF8CEBD6F0200A826
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\Square44x44Logo.targetsize-24.png: 156637F7B5363E983E7A46D8E533A23D
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\Square44x44Logo.targetsize-24_altform-unplated.png: 156637F7B5363E983E7A46D8E533A23D
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
-MentorSystemWebRTC\bin\x86\Debug\AppX\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
-MentorSystemWebRTC\bin\x86\Debug\AppX\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
 MentorSystemWebRTC\bin\x86\Release\AppX\Assets\SplashScreen.scale-200.png: A85C1D7624B6902CF8CEBD6F0200A826
 MentorSystemWebRTC\bin\x86\Release\AppX\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
 MentorSystemWebRTC\bin\x86\Release\AppX\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE
@@ -35,6 +27,5 @@ MentorSystemWebRTC\bin\x86\Release\AppX\Assets\Square44x44Logo.targetsize-24_alt
 MentorSystemWebRTC\bin\x86\Release\AppX\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
 MentorSystemWebRTC\bin\x86\Release\AppX\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
 MentorSystemWebRTC\bin\x86\Release\AppX\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
-MentorSystemWebRTC\obj\x86\Debug\MentorSystemWebRTC.csproj.CopyComplete: D41D8CD98F00B204E9800998ECF8427E
 MentorSystemWebRTC\obj\x86\Release\MentorSystemWebRTC.csproj.CopyComplete: D41D8CD98F00B204E9800998ECF8427E
 MentorSystemWebRTC\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826

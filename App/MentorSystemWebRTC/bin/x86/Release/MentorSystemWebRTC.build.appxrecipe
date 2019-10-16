@@ -9,7 +9,7 @@
     <SolutionConfiguration>Release|x86</SolutionConfiguration>
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>e40ad7c5-1206-4cce-a15d-8ce985deab80</PackageIdentityName>
-    <PackageIdentityPublisher>CN=DefaultCompany</PackageIdentityPublisher>
+    <PackageIdentityPublisher>CN=STAR_Project</PackageIdentityPublisher>
     <IntermediateOutputPath>C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\obj\x86\Release\</IntermediateOutputPath>
     <RemoteDeploymentType></RemoteDeploymentType>
     <PackageRegistrationPath></PackageRegistrationPath>

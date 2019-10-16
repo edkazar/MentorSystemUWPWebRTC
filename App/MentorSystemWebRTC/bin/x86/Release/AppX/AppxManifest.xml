@@ -46,12 +46,6 @@
   <Extensions>
     <Extension Category="windows.activatableClass.inProcessServer">
       <InProcessServer>
-        <Path>WebRtcScheme.dll</Path>
-        <ActivatableClass ActivatableClassId="WebRtcScheme.SchemeHandler" ThreadingModel="both" />
-      </InProcessServer>
-    </Extension>
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
         <Path>Org.WebRtc.dll</Path>
         <ActivatableClass ActivatableClassId="Org.WebRtc.RTCIceCandidate" ThreadingModel="both" />
         <ActivatableClass ActivatableClassId="Org.WebRtc.RTCDataChannelMessageEvent" ThreadingModel="both" />

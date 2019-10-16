@@ -58,6 +58,8 @@ public class Stabilization : Singleton<Stabilization>
         //CurrentPose = m;
     }
 
+    // Where rotation is a Quaternion(rotX, rotY, rotZ, rotW)
+    // and position is Vector3(posX, posY, posZ)
     public void Stablize(Quaternion rotation, Vector3 position)
     {
         Matrix4x4 cam = Matrix4x4.identity;

@@ -88,13 +88,11 @@ public class ControlScript : MonoBehaviour
     private int MainTextureHeight = 504;
     private Texture2D MainTex, YTex, UTex, VTex;
 
+    protected float LastUpdate = 0f;
+
     private byte[] g_plane;
 
     public GameObject TextItemPrefab;
-    /*public GameObject VitalSignPrefab;
-    GameObject VitalSignsContainer;
-    VitalSign HR;
-    VitalSign SpO2;*/
 
     private bool g_SavePoseInfo;
 
@@ -137,6 +135,9 @@ public class ControlScript : MonoBehaviour
     private GameObject g_UltrasoundButton;
     private GameObject g_EventSystem;
     private TouchEvents g_EventsScript;
+    private GameObject g_VSPlacerSystem;
+    private VitalSignsPlacer g_VSPlacerScript;
+    private GameObject g_UltrasoundProbe;
     private GameObject g_UI;
     public Camera mainCamera;
 
@@ -186,6 +187,16 @@ public class ControlScript : MonoBehaviour
                 Debug.LogError("Could not load Stabilized Quad");
             }
         }
+        
+        /*if (g_UltrasoundProbe == null)
+        {
+            g_UltrasoundProbe = GameObject.Find("UltrasoundProbe");
+            if (g_UltrasoundProbe == null)
+            {
+                Debug.LogError("Could not load Ultrasound Probe");
+            }
+        }*/
+        
 
         if (g_EventSystem == null)
         {
@@ -202,6 +213,24 @@ public class ControlScript : MonoBehaviour
             if (g_EventsScript == null)
             {
                 Debug.LogError("Could not load Event System Script");
+            }
+        }
+
+        if (g_VSPlacerSystem == null)
+        {
+            g_VSPlacerSystem = GameObject.Find("VitalSigns");
+            if (g_VSPlacerSystem == null)
+            {
+                Debug.LogError("Could not load Vital Signs Placer");
+            }
+        }
+
+        if (g_VSPlacerScript == null)
+        {
+            g_VSPlacerScript = g_VSPlacerSystem.GetComponent<VitalSignsPlacer>();
+            if (g_VSPlacerScript == null)
+            {
+                Debug.LogError("Could not load Vital Signs Placer Script");
             }
         }
 
@@ -223,30 +252,8 @@ public class ControlScript : MonoBehaviour
             }
         }
 
-        /*if (VitalSignsContainer == null)
-        {
-            VitalSignsContainer = GameObject.Find("VitalSignsContainer");
-            if (VitalSignsContainer == null)
-            {
-                Debug.LogError("Could not load VitalSignsContainer");
-            }
-        }  */
-
         if (Hololens == true)
             Stabilization.Instance.SetPlane(StabilizedQuad);
-
-        /*if (VitalSignPrefab == null)
-        {
-            VitalSignPrefab = Resources.Load<GameObject>("VitalSign/VitalSign");
-            HR = Instantiate(VitalSignPrefab, VitalSignsContainer.transform).GetComponent<VitalSign>();
-            HR.Init(new Vector3(0.1f, 0.135f, 0f), Color.green, "HR", "160", "75");
-            SpO2 = Instantiate(VitalSignPrefab, VitalSignsContainer.transform).GetComponent<VitalSign>();
-            SpO2.Init(new Vector3(0.1f, 0.385f, 0f), Color.cyan, "SpO2", "100", "90");
-            if (VitalSignPrefab == null)
-            {
-                Debug.LogError("Could not load VitalSignPrefab");
-            }
-        }*/
 
 #if !UNITY_EDITOR
         if (LocalStreamEnabled) {
@@ -504,13 +511,20 @@ public class ControlScript : MonoBehaviour
 
     }
 
+    System.Random rnd = new System.Random();
 
     private void Update()
     {
         //LastPeerPoseLabel.text = Plugin.getFloat().toString();
         //Plugin.initChessPoseController();
 
-        if(g_EventsScript.UltrasoundButtonClicked)
+        //just for testing
+        /*int n1 = rnd.Next(1, 99);
+        HR.Value = n1.ToString();
+        int n2 = rnd.Next(1, 99);
+        SpO2.Value = n2.ToString();*/
+
+        if (g_EventsScript.UltrasoundButtonClicked)
         {
             g_UltrasoundButton.GetComponent<RectTransform>().Rotate(new Vector3(0f, 0f, 180f));
 
@@ -672,7 +686,6 @@ public class ControlScript : MonoBehaviour
 
     int counter = 0;
     bool ToInit = false;
-    //System.Random rnd = new System.Random();
 
     // fired whenever we get a video frame from the remote peer.
     // if there is pose data, posXYZ and rotXYZW will have non-zero values.
@@ -684,13 +697,7 @@ public class ControlScript : MonoBehaviour
         {
             g_plane = yPlane;
             if (Hololens == true)
-            {
-                //just for testing
-                //int n1 = rnd.Next(1,99);
-                //HR.Value = n1.ToString();
-                //int n2 = rnd.Next(1,99);
-                //SpO2.Value = n2.ToString();
-
+            {        
                 if (g_EventsScript.isUserIconAnnotating == false && g_EventsScript.isUserLineAnnotating == false)
                 {
                     UnityEngine.WSA.Application.InvokeOnAppThread(() =>
@@ -832,6 +839,11 @@ public class ControlScript : MonoBehaviour
         {
             try
             {
+                /*if (Time.time - LastUpdate > 2.0f)
+                {
+                    g_VSPlacerScript.HRValue = "--";
+                    g_VSPlacerScript.HRValue = "--";
+                }*/
 
                 JObject message = JObject.Parse(rawMessageString);
                 if ((string)message["type"] == "I")
@@ -873,9 +885,51 @@ public class ControlScript : MonoBehaviour
                 }
                 else if ((string)message["type"] == "O")
                 {
-                    Debug.Log("test");
-                    //HR.Value = (string)message["HR"];
-                    //SpO2.Value = (string)message["SpO2"];
+                    /*UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    {
+                        LastUpdate = Time.time;
+                    }, true);
+
+                    Debug.Log("I am here");*/
+
+                    g_VSPlacerScript.HRValue = (string)message["HR"];
+                    g_VSPlacerScript.SpO2Value = (string)message["SpO2"];
+                }
+                else if ((string)message["type"] == "T")
+                {
+                    JArray jsonarray = (JArray)message["matrix"];
+                    Vector4 col1 = new Vector4(Convert.ToSingle((string)jsonarray[0]), Convert.ToSingle((string)jsonarray[4]), Convert.ToSingle((string)jsonarray[8]), Convert.ToSingle((string)jsonarray[12]));
+                    Vector4 col2 = new Vector4(Convert.ToSingle((string)jsonarray[1]), Convert.ToSingle((string)jsonarray[5]), Convert.ToSingle((string)jsonarray[9]), Convert.ToSingle((string)jsonarray[13]));
+                    Vector4 col3 = new Vector4(Convert.ToSingle((string)jsonarray[2]), Convert.ToSingle((string)jsonarray[6]), Convert.ToSingle((string)jsonarray[10]), Convert.ToSingle((string)jsonarray[14]));
+                    Vector4 col4 = new Vector4(Convert.ToSingle((string)jsonarray[3]), Convert.ToSingle((string)jsonarray[7]), Convert.ToSingle((string)jsonarray[11]), Convert.ToSingle((string)jsonarray[15]));
+                    Matrix4x4 UltrasoundPose = new Matrix4x4(col1, col2, col3, col4);
+                    //Debug.Log(UltrasoundPose.ToString());
+
+
+
+                    //TestObject.transform.position = UltrasoundPose.MultiplyPoint3x4(TestObject.transform.position);
+                    //TestObject.transform.rotation *= Quaternion.LookRotation(UltrasoundPose.GetColumn(2), TransformationMatrix.GetColumn(1));
+
+                    //transform.SetPositionAndRotation((Camera.transform.position + Camera.transform.forward * Distantce) + (Camera.transform.up * cornerOffsetY) + (Camera.transform.right * cornerOffsetX),
+                    //Quaternion.LookRotation(Camera.transform.forward, Camera.transform.up));
+                    float posX = (960.0f + 2 * (960.0f * Convert.ToSingle((string)jsonarray[3])));
+                    float posY = (540.0f + 2 * (540.0f * Convert.ToSingle((string)jsonarray[7])));
+                    //Debug.Log("Transformed: " + posX + "," + posY);
+                    
+                    Vector3 newPos = new Vector3(Convert.ToSingle(Math.Round((decimal)posX, 0)), Convert.ToSingle(Math.Round((decimal)posY, 0)), 1f);
+                    Debug.Log("Vectorized: " + newPos.x + "," + newPos.y + "," + newPos.z);
+                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    {
+                        RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().position = newPos;
+                    }, false);
+
+                    
+
+                    /*float tempWidth = RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().rect.width;
+                    float tempHeight = RemoteVideoImage_StarTrainee2.GetComponent<RectTransform>().rect.height;
+                    Debug.Log("Original: " + tempWidth + "," + tempHeight);*/
+
+                    //g_UltrasoundProbe.GetComponent<RectTransform>().position = new Vector3(posX, posY, 1f);
                 }
                 else
                 {
@@ -1284,6 +1338,8 @@ public class ControlScript : MonoBehaviour
         if (selectedCapability != null)
         {
             selectedCapability.FrameRate = preferredFrameRate;
+
+            selectedCapability.MrcEnabled = false;
             Conductor.Instance.VideoCaptureProfile = selectedCapability;
             Conductor.Instance.UpdatePreferredFrameFormat();
             System.Diagnostics.Debug.WriteLine("Selected video device capability - " + selectedCapability.Width + "x" + selectedCapability.Height + "@" + selectedCapability.FrameRate);

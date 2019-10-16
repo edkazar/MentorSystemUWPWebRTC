@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" IgnorableNamespaces="uap uap2 mp" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10">
-  <Identity Name="Template3D" Publisher="CN=DefaultCompany" Version="1.0.0.0" />
+<Package xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" IgnorableNamespaces="uap uap2 uap3 uap4 mp mobile iot">
+  <Identity Name="MentorSystemWebRTC" Publisher="CN=STAR_Project" Version="1.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="e40ad7c5-1206-4cce-a15d-8ce985deab80" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MentorSystemWebRTC</DisplayName>
@@ -8,7 +8,7 @@
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10240.0" MaxVersionTested="10.0.17134.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10240.0" MaxVersionTested="10.0.17763.0" />
   </Dependencies>
   <Resources>
     <Resource Language="x-generate" />
@@ -16,13 +16,14 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template3D.App">
       <uap:VisualElements DisplayName="MentorSystemWebRTC" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Template_3D" BackgroundColor="transparent">
-        <uap:DefaultTile ShortName="MentorSystemWebRTC" Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:DefaultTile ShortName="MentorSystemWebRTC" Wide310x150Logo="Assets\Wide310x150Logo.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#FFFFFF" />
         <uap:InitialRotationPreference>
-          <uap:Rotation Preference="landscape" />
-          <uap:Rotation Preference="landscapeFlipped" />
           <uap:Rotation Preference="portrait" />
+          <uap:Rotation Preference="landscape" />
           <uap:Rotation Preference="portraitFlipped" />
+          <uap:Rotation Preference="landscapeFlipped" />
         </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
@@ -34,12 +35,4 @@
     <DeviceCapability Name="webcam" />
     <DeviceCapability Name="microphone" />
   </Capabilities>
-  <Extensions>
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
-        <Path>WebRtcScheme.dll</Path>
-        <ActivatableClass ActivatableClassId="WebRtcScheme.SchemeHandler" ThreadingModel="both"/>
-      </InProcessServer>
-    </Extension>
-  </Extensions>
 </Package>
