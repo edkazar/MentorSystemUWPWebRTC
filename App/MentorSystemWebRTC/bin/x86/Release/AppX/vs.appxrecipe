@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\bin\x86\Release\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-10-18T19:54:20.043</Modified>
+      <Modified>2019-10-18T23:20:02.616</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\bin\x86\Release\MentorSystemWebRTC.exe">
       <PackagePath>entrypoint\MentorSystemWebRTC.exe</PackagePath>
-      <Modified>2019-10-18T19:53:36.908</Modified>
+      <Modified>2019-10-18T23:19:20.376</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\.nuget\packages\microsoft.applicationinsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -557,11 +557,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Resource.res">
       <PackagePath>Resource.res</PackagePath>
-      <Modified>2019-10-18T19:32:52.199</Modified>
+      <Modified>2019-10-18T23:17:54.266</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\StoreManifest.xml">
       <PackagePath>StoreManifest.xml</PackagePath>
-      <Modified>2019-10-18T19:32:29.373</Modified>
+      <Modified>2019-10-18T23:17:36.706</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
@@ -640,15 +640,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\boot.config">
       <PackagePath>Data\boot.config</PackagePath>
-      <Modified>2019-10-18T19:32:25.848</Modified>
+      <Modified>2019-10-18T23:17:34.626</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\globalgamemanagers">
       <PackagePath>Data\globalgamemanagers</PackagePath>
-      <Modified>2019-10-18T19:32:16.892</Modified>
+      <Modified>2019-10-18T23:17:27.821</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\level0">
       <PackagePath>Data\level0</PackagePath>
-      <Modified>2019-10-18T19:32:11.588</Modified>
+      <Modified>2019-10-18T23:17:23.366</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\Resources\unity default resources">
       <PackagePath>Data\Resources\unity default resources</PackagePath>
@@ -656,39 +656,39 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\Resources\unity_builtin_extra">
       <PackagePath>Data\Resources\unity_builtin_extra</PackagePath>
-      <Modified>2019-10-18T19:32:25.838</Modified>
+      <Modified>2019-10-18T23:17:34.606</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\globalgamemanagers.assets">
       <PackagePath>Data\globalgamemanagers.assets</PackagePath>
-      <Modified>2019-10-18T19:32:17.802</Modified>
+      <Modified>2019-10-18T23:17:28.636</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\resources.assets">
       <PackagePath>Data\resources.assets</PackagePath>
-      <Modified>2019-10-18T19:32:17.872</Modified>
+      <Modified>2019-10-18T23:17:28.710</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\sharedassets0.assets">
       <PackagePath>Data\sharedassets0.assets</PackagePath>
-      <Modified>2019-10-18T19:32:20.542</Modified>
+      <Modified>2019-10-18T23:17:30.276</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\level0.resS">
       <PackagePath>Data\level0.resS</PackagePath>
-      <Modified>2019-10-18T19:32:11.578</Modified>
+      <Modified>2019-10-18T23:17:23.360</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\resources.assets.resS">
       <PackagePath>Data\resources.assets.resS</PackagePath>
-      <Modified>2019-10-18T19:32:17.869</Modified>
+      <Modified>2019-10-18T23:17:28.706</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\sharedassets0.assets.resS">
       <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
-      <Modified>2019-10-18T19:32:20.532</Modified>
+      <Modified>2019-10-18T23:17:30.276</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\managedAssemblies.txt">
       <PackagePath>Data\managedAssemblies.txt</PackagePath>
-      <Modified>2019-10-18T19:32:52.028</Modified>
+      <Modified>2019-10-18T23:17:54.120</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Data\nativePlugins.txt">
       <PackagePath>Data\nativePlugins.txt</PackagePath>
-      <Modified>2019-10-18T19:32:52.039</Modified>
+      <Modified>2019-10-18T23:17:54.126</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -701,259 +701,259 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Assembly-CSharp.dll">
       <PackagePath>Assembly-CSharp.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.317</Modified>
+      <Modified>2019-10-18T23:19:56.838</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.SpriteMaskModule.dll">
       <PackagePath>UnityEngine.SpriteMaskModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.381</Modified>
+      <Modified>2019-10-18T23:19:56.889</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.SpriteShapeModule.dll">
       <PackagePath>UnityEngine.SpriteShapeModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.403</Modified>
+      <Modified>2019-10-18T23:19:56.936</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.StreamingModule.dll">
       <PackagePath>UnityEngine.StreamingModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.423</Modified>
+      <Modified>2019-10-18T23:19:56.956</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.StyleSheetsModule.dll">
       <PackagePath>UnityEngine.StyleSheetsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.445</Modified>
+      <Modified>2019-10-18T23:19:57.016</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.SubstanceModule.dll">
       <PackagePath>UnityEngine.SubstanceModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.495</Modified>
+      <Modified>2019-10-18T23:19:57.041</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.TerrainModule.dll">
       <PackagePath>UnityEngine.TerrainModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.570</Modified>
+      <Modified>2019-10-18T23:19:57.076</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.TerrainPhysicsModule.dll">
       <PackagePath>UnityEngine.TerrainPhysicsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.622</Modified>
+      <Modified>2019-10-18T23:19:57.129</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.TextCoreModule.dll">
       <PackagePath>UnityEngine.TextCoreModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.663</Modified>
+      <Modified>2019-10-18T23:19:57.156</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.TextRenderingModule.dll">
       <PackagePath>UnityEngine.TextRenderingModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.702</Modified>
+      <Modified>2019-10-18T23:19:57.220</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.TilemapModule.dll">
       <PackagePath>UnityEngine.TilemapModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:12.726</Modified>
+      <Modified>2019-10-18T23:19:57.300</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UIElementsModule.dll">
       <PackagePath>UnityEngine.UIElementsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.045</Modified>
+      <Modified>2019-10-18T23:19:57.576</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UIModule.dll">
       <PackagePath>UnityEngine.UIModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.068</Modified>
+      <Modified>2019-10-18T23:19:57.600</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UNETModule.dll">
       <PackagePath>UnityEngine.UNETModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.107</Modified>
+      <Modified>2019-10-18T23:19:57.640</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityAnalyticsModule.dll">
       <PackagePath>UnityEngine.UnityAnalyticsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.127</Modified>
+      <Modified>2019-10-18T23:19:57.736</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityConnectModule.dll">
       <PackagePath>UnityEngine.UnityConnectModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.172</Modified>
+      <Modified>2019-10-18T23:19:57.790</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestAssetBundleModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestAssetBundleModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.188</Modified>
+      <Modified>2019-10-18T23:19:57.820</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestAudioModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestAudioModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.205</Modified>
+      <Modified>2019-10-18T23:19:57.885</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.299</Modified>
+      <Modified>2019-10-18T23:19:57.916</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestTextureModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestTextureModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.362</Modified>
+      <Modified>2019-10-18T23:19:57.967</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UnityWebRequestWWWModule.dll">
       <PackagePath>UnityEngine.UnityWebRequestWWWModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.381</Modified>
+      <Modified>2019-10-18T23:19:58.016</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.VehiclesModule.dll">
       <PackagePath>UnityEngine.VehiclesModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.397</Modified>
+      <Modified>2019-10-18T23:19:58.036</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.VFXModule.dll">
       <PackagePath>UnityEngine.VFXModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.469</Modified>
+      <Modified>2019-10-18T23:19:58.106</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.VideoModule.dll">
       <PackagePath>UnityEngine.VideoModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.494</Modified>
+      <Modified>2019-10-18T23:19:58.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.VRModule.dll">
       <PackagePath>UnityEngine.VRModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.548</Modified>
+      <Modified>2019-10-18T23:19:58.226</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.WindModule.dll">
       <PackagePath>UnityEngine.WindModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.599</Modified>
+      <Modified>2019-10-18T23:19:58.269</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.XRModule.dll">
       <PackagePath>UnityEngine.XRModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.630</Modified>
+      <Modified>2019-10-18T23:19:58.316</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.SharedInternalsModule.dll">
       <PackagePath>UnityEngine.SharedInternalsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.652</Modified>
+      <Modified>2019-10-18T23:19:58.339</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.ScreenCaptureModule.dll">
       <PackagePath>UnityEngine.ScreenCaptureModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.702</Modified>
+      <Modified>2019-10-18T23:19:58.389</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.Physics2DModule.dll">
       <PackagePath>UnityEngine.Physics2DModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.752</Modified>
+      <Modified>2019-10-18T23:19:58.436</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Unity.Analytics.DataPrivacy.dll">
       <PackagePath>Unity.Analytics.DataPrivacy.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.807</Modified>
+      <Modified>2019-10-18T23:19:58.486</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Unity.TextMeshPro.dll">
       <PackagePath>Unity.TextMeshPro.dll</PackagePath>
-      <Modified>2019-10-18T19:54:13.997</Modified>
+      <Modified>2019-10-18T23:19:58.636</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.AccessibilityModule.dll">
       <PackagePath>UnityEngine.AccessibilityModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.015</Modified>
+      <Modified>2019-10-18T23:19:58.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.AIModule.dll">
       <PackagePath>UnityEngine.AIModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.048</Modified>
+      <Modified>2019-10-18T23:19:58.716</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.AnimationModule.dll">
       <PackagePath>UnityEngine.AnimationModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.100</Modified>
+      <Modified>2019-10-18T23:19:58.767</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.ARModule.dll">
       <PackagePath>UnityEngine.ARModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.151</Modified>
+      <Modified>2019-10-18T23:19:58.819</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.AssetBundleModule.dll">
       <PackagePath>UnityEngine.AssetBundleModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.211</Modified>
+      <Modified>2019-10-18T23:19:58.874</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.AudioModule.dll">
       <PackagePath>UnityEngine.AudioModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.249</Modified>
+      <Modified>2019-10-18T23:19:58.906</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.ClothModule.dll">
       <PackagePath>UnityEngine.ClothModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:14.309</Modified>
+      <Modified>2019-10-18T23:19:58.955</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.CoreModule.dll">
       <PackagePath>UnityEngine.CoreModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.225</Modified>
+      <Modified>2019-10-18T23:19:59.996</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.CrashReportingModule.dll">
       <PackagePath>UnityEngine.CrashReportingModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.282</Modified>
+      <Modified>2019-10-18T23:20:00.059</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.DirectorModule.dll">
       <PackagePath>UnityEngine.DirectorModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.301</Modified>
+      <Modified>2019-10-18T23:20:00.074</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.dll">
       <PackagePath>UnityEngine.dll</PackagePath>
-      <Modified>2019-10-18T19:32:39.523</Modified>
+      <Modified>2019-10-18T23:17:43.446</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.GameCenterModule.dll">
       <PackagePath>UnityEngine.GameCenterModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.326</Modified>
+      <Modified>2019-10-18T23:20:00.106</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.GridModule.dll">
       <PackagePath>UnityEngine.GridModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.343</Modified>
+      <Modified>2019-10-18T23:20:00.120</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.ImageConversionModule.dll">
       <PackagePath>UnityEngine.ImageConversionModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.362</Modified>
+      <Modified>2019-10-18T23:20:00.140</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.IMGUIModule.dll">
       <PackagePath>UnityEngine.IMGUIModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.439</Modified>
+      <Modified>2019-10-18T23:20:00.206</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.InputModule.dll">
       <PackagePath>UnityEngine.InputModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.497</Modified>
+      <Modified>2019-10-18T23:20:00.226</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.JSONSerializeModule.dll">
       <PackagePath>UnityEngine.JSONSerializeModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.551</Modified>
+      <Modified>2019-10-18T23:20:00.288</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.LocalizationModule.dll">
       <PackagePath>UnityEngine.LocalizationModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.604</Modified>
+      <Modified>2019-10-18T23:20:00.359</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.ParticleSystemModule.dll">
       <PackagePath>UnityEngine.ParticleSystemModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.671</Modified>
+      <Modified>2019-10-18T23:20:00.456</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.PerformanceReportingModule.dll">
       <PackagePath>UnityEngine.PerformanceReportingModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.725</Modified>
+      <Modified>2019-10-18T23:20:00.516</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.PhysicsModule.dll">
       <PackagePath>UnityEngine.PhysicsModule.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.854</Modified>
+      <Modified>2019-10-18T23:20:00.556</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\HoloPoseClientCore.dll">
       <PackagePath>HoloPoseClientCore.dll</PackagePath>
-      <Modified>2019-10-18T19:54:15.915</Modified>
+      <Modified>2019-10-18T23:20:00.588</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Newtonsoft.Json.dll">
       <PackagePath>Newtonsoft.Json.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.006</Modified>
+      <Modified>2019-10-18T23:20:00.675</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.Timeline.dll">
       <PackagePath>UnityEngine.Timeline.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.084</Modified>
+      <Modified>2019-10-18T23:20:00.746</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\SocketIoClientDotNet.dll">
       <PackagePath>SocketIoClientDotNet.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.104</Modified>
+      <Modified>2019-10-18T23:20:00.770</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.UI.dll">
       <PackagePath>UnityEngine.UI.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.266</Modified>
+      <Modified>2019-10-18T23:20:00.926</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.SpatialTracking.dll">
       <PackagePath>UnityEngine.SpatialTracking.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.286</Modified>
+      <Modified>2019-10-18T23:20:00.946</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Unity.Analytics.Tracker.dll">
       <PackagePath>Unity.Analytics.Tracker.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.310</Modified>
+      <Modified>2019-10-18T23:20:00.972</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\EngineIoClientDotNet.dll">
       <PackagePath>EngineIoClientDotNet.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.348</Modified>
+      <Modified>2019-10-18T23:20:01.016</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\Unity.Analytics.StandardEvents.dll">
       <PackagePath>Unity.Analytics.StandardEvents.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.371</Modified>
+      <Modified>2019-10-18T23:20:01.040</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\UnityEngine.Networking.dll">
       <PackagePath>UnityEngine.Networking.dll</PackagePath>
-      <Modified>2019-10-18T19:54:16.488</Modified>
+      <Modified>2019-10-18T23:20:01.160</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\bin\x86\Release\Core\MentorSystemWebRTC.exe">
       <PackagePath>MentorSystemWebRTC.exe</PackagePath>
-      <Modified>2019-10-18T19:54:20.035</Modified>
+      <Modified>2019-10-18T23:20:02.598</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

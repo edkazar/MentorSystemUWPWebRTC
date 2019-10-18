@@ -1,2 +1,2 @@
-MainPackage=C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\bin\x86\Release\MentorSystemWebRTC_1.0.3.0_x86.appx
-SymbolPackage=C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\AppPackages\MentorSystemWebRTC_1.0.3.0_Test\MentorSystemWebRTC_1.0.3.0_x86.appxsym
+MainPackage=C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\bin\x86\Release\MentorSystemWebRTC_1.1.0.0_x86.appx
+SymbolPackage=C:\Users\Holol\OneDrive\Documents\Unity Projects\MentorSystemUWPWebRTC\App\MentorSystemWebRTC\AppPackages\MentorSystemWebRTC_1.1.0.0_Test\MentorSystemWebRTC_1.1.0.0_x86.appxsym

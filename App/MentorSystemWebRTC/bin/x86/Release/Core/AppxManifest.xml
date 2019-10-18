@@ -7,7 +7,7 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="MentorSystemWebRTC" Publisher="CN=STAR_Project" Version="1.0.3.0" ProcessorArchitecture="x86" />
+  <Identity Name="MentorSystemWebRTC" Publisher="CN=STAR_Project" Version="1.1.0.0" ProcessorArchitecture="x86" />
   <mp:PhoneIdentity PhoneProductId="e40ad7c5-1206-4cce-a15d-8ce985deab80" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MentorSystemWebRTC</DisplayName>
