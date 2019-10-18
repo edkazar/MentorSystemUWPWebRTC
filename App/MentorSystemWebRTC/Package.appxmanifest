@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" xmlns:mobile="http://schemas.microsoft.com/appx/manifest/mobile/windows10" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" IgnorableNamespaces="uap uap2 uap3 uap4 mp mobile iot">
-  <Identity Name="MentorSystemWebRTC" Publisher="CN=STAR_Project" Version="1.0.2.0" />
+  <Identity Name="MentorSystemWebRTC" Publisher="CN=STAR_Project" Version="1.0.3.0" />
   <mp:PhoneIdentity PhoneProductId="e40ad7c5-1206-4cce-a15d-8ce985deab80" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MentorSystemWebRTC</DisplayName>
