@@ -4,6 +4,7 @@ System for Telementoring with Augmented Reality. Mentor subsystem.
 
 * Homepage: <https://engineering.purdue.edu/starproj/>
 * Mentee subsystem: <https://github.com/practisebody/STAR>
+* STAR Controller App: <https://www.github.com/practisebody/STARController_UWP>
 
 ## Installing
 
