@@ -8,9 +8,14 @@ System for Telementoring with Augmented Reality. Mentor subsystem.
 
 ## Installing
 
+### Miscellaneous
+
+* The system was tested in two different Windows 10 PCs with in-built touch capabilities, and on three different Windows 10 PCs connected to a touch disply.
+* The installation time of the Mentor System is of less than 5 minutes. When combined, the installation time of the entire STAR platform is less than 15 minutes.
+
 ### Prerequisites
 
-A PC with a touch display (built-in or connected to one). If the PC used for this system does not have a touch display, the "Draw Lines" functionality will not properly work. 
+A computer with Windows 10, version 10.0.17763 or equivalent. Additionally, PC requires a touch display (built-in or connected to one). If the PC used for this system does not have a touch display, the "Draw Lines" functionality will not properly work. 
 
 ### Getting Started
 
